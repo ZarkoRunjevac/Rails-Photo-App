@@ -1,1 +1,21 @@
-Under construction
+<!DOCTYPE html>
+<html lang="en" ng-app="spa">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= stylesheet_link_tag    "spa", :media => "all" %>
+  <%= javascript_include_tag "spa" %>
+</head>
+<body>
+
+<div class="container">
+  <div class="jumbotron jumbotron-bck">
+    <h1>Rails Photo App --- Welcome</h1>
+  </div>
+
+  <div ui-view></div>
+</div>
+
+</body>
+</html>
