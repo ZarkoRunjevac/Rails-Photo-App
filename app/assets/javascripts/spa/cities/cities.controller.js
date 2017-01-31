@@ -48,7 +48,7 @@
         }
 
         function update() {
-            //console.log("update", vm.city);
+            console.log("update", vm.city);
             vm.city.$update()
                 .then(function(response){
                     //console.log(response);
@@ -57,7 +57,7 @@
         }
 
         function remove() {
-            //console.log("remove", vm.city);
+            console.log("remove", vm.city);
             vm.city.$delete()
                 .then(function(response){
                     //console.log(response);
