@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  
+  #resources :thing_type_of_things, except: [:new, :edit]
   get 'authn/whoami',  defaults: {format: :json}
 
   get 'authn/checkme'
@@ -17,10 +19,13 @@ Rails.application.routes.draw do
     end
     resources :things, except: [:new, :edit] do
       resources :thing_images, only: [:index, :create, :update, :destroy]
+      resources :type_of_things, only: [:create, :destroy], controller: :thing_types_of_things
     end
+
+    resources :type_of_things, except: [:new, :edit]
   end
 
-    root "ui#index"
+  root "ui#index"
   get "/ui"=>'ui#index'
   get "/ui#"=>'ui#index'
 end
