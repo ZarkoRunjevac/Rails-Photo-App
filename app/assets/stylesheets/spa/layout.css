@@ -111,7 +111,7 @@ body a{
 }
 nav {
     position: relative;
-    float: right;
+    /*float: right;*/
 }
 nav ul {
     padding: 0;
@@ -1303,4 +1303,28 @@ p.copy a:hover{
     .getintouch {
         padding: 0em 0 0 0;
     }
+}
+/*********** week 4 *************/
+form .invalid {
+    color: red;
+}
+
+.fullsize {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+/*********** navbar *************/
+
+.nav li form {
+    padding-left: 10px; /* adds spacing along left of dropdown menu form */
+    padding-right: 10px;
+}
+
+[readonly='readonly'] {
+    background-color: inherit;
+}
+
+button:disabled {
+    color:#717782;
 }

@@ -4,6 +4,11 @@
     angular
         .module("spa", [
             "ui.router",
-            "spa.cities"
+            "spa.cities",
+            "spa.config",
+            "spa.authn",
+            "spa.authz",
+            "spa.layout",            
+            "spa.subjects"
         ]);
 })();

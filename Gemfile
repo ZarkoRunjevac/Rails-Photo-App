@@ -1,9 +1,13 @@
+#
 source 'https://rubygems.org'
 
 gem 'rails', '4.2.6'
 gem 'rails-api', '~>0.4', '>=0.4.0'
 gem 'pry-rails', '~>0.3', '>=0.3.4'
 gem 'rack-cors', '~>0.4', '>=0.4.0', :require => 'rack/cors'
+gem 'devise_token_auth', '~>0.1', '>=0.1.39'
+gem 'bcrypt', '~> 3.1.7'
+gem 'pundit', '~>1.1', '>=1.1.0'
 
 gem 'sass-rails', '~> 5.0', '>=3.4.22'
 gem 'uglifier', '~> 3.0', '>=3.0.2'
@@ -46,7 +50,9 @@ gem 'faker', '~>1.6', '>=1.6.6'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap', '~>3.3', '>= 3.3.7'
-  gem 'rails-assets-angular', '~>1.5', '>= 1.5.8'
+  gem 'rails-assets-angular', '~>1.5', '= 1.5.8'
   gem 'rails-assets-angular-ui-router', '~>0.3', '>= 0.3.1'
   gem 'rails-assets-angular-resource', '~>1.5', '>= 1.5.8'
+  gem 'rails-assets-ng-token-auth', '~>0.0', '>= 0.0.27'
+  gem 'rails-assets-angular-cookie' #required by ng-token-auth
 end
