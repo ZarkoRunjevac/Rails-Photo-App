@@ -50464,6 +50464,10 @@ window.isEmpty = function(obj) {
                 url: "/things/:id",
                 templateUrl: APP_CONFIG.things_page_html
             })
+            .state("tags",{
+                url: "/tags/:id",
+                templateUrl: APP_CONFIG.tags_page_html
+            })
             .state("authn",{
                 url: "/authn",
                 templateUrl: APP_CONFIG.authn_page_html
@@ -50689,8 +50693,9 @@ window.isEmpty = function(obj) {
             authn_page_html: "/assets/spa/pages/authn_page-6c695ab9359c5ae6944b9c8b01d12ce3c2dbcb36f3f3c411d2ab1aeede2b0ac3.html",
             images_page_html: "/assets/spa/pages/images_page-99b48cd583cb28a576ef0f07f1d15a282a18a6f8e98e15ae53e9cc1645545346.html",
             things_page_html: "/assets/spa/pages/things_page-88afe8a9c14d121ce884fc9ebf9ba95a8144394b0003dc35c83844f7a13eae0c.html",
+            tags_page_html: "/assets/spa/pages/tags_page-002ca1de29c0c62d05289db16b43fca9bc7313849ec1378e85ed9b6b733f9c3f.html",
 
-            navbar_html: "/assets/spa/layout/navbar/navbar-21b8339c38f81defb4996c7a898646f65af321be8bb61888915cc14e737ea28e.html",
+            navbar_html: "/assets/spa/layout/navbar/navbar-12b8ec1381937890a5b926423958ec5c895ff89d13427d113110f4fd77a0cc08.html",
             authn_session_html: "/assets/spa/authn/authn_session/authn_session-bdcf2dbbe1b0cf62bd6140784e41060fe487fffa4f00680bd0dbea2745899c89.html",
             authn_signup_html: "/assets/spa/authn/signup/signup-3d65f8d15ac3e2811771a4faa8f6ccd7bad70a311be52dfd44a2803da2f09ca9.html",
             foos_html: "/spa/foos/foos.html",
@@ -50698,6 +50703,8 @@ window.isEmpty = function(obj) {
             image_editor_html: "/assets/spa/subjects/images/image_editor-de66fefb79bfff7cce25d8245d51ad297c3cd5c8a37431e9dc55c40a6757a0e7.html",
             thing_editor_html: "/assets/spa/subjects/things/thing_editor-6fff71eb3a89ed7e0fdb48fc627b156ce7ab273fdf32e186d697724036cbdc2d.html",
             thing_selector_html: "/assets/spa/subjects/things/thing_selector-4e44d1bcbf0a304b0c63b76d9e3e2797e272c18f4a7fbcde1d23d12b52ca8413.html",
+            tag_editor_html: "/spa/subjects/tags/tag_editor.html",
+            tag_selector_html: "/assets/spa/subjects/tags/tag_selector-1e53e289a562eacc3b8494e31f6e2f11e7ad1a8a7873b452a63e77c2136a6b38.html"
         });
 
 })();
@@ -51883,7 +51890,352 @@ window.isEmpty = function(obj) {
     }
 
 })();
+(function() {
+    "use strict";
+
+    angular
+        .module("spa.subjects")
+        .factory("spa.subjects.Tag", TagFactory);
+
+    TagFactory.$inject = ["$resource", "spa.config.APP_CONFIG"];
+    function TagFactory($resource, APP_CONFIG) {
+        var service = $resource(APP_CONFIG.server_url + "/api/type_of_things/:id",
+            { id: '@id' },
+            {
+                update: {method: "PUT"},
+                save:   {method: "POST", transformRequest: checkEmptyPayload }
+            });
+        return service;
+    }
+
+    //rails wants at least one parameter of the document filled in
+    //all of our fields are optional
+    //ngResource is not passing a null field by default, we have to force it
+    function checkEmptyPayload(data) {
+        if (!data['name']) {
+            data['name']=null;
+        }
+        return angular.toJson(data);
+    }
+})();
+(function() {
+    "use strict";
+
+    angular
+        .module("spa.subjects")
+        .factory("spa.subjects.TagThing", TagThing);
+
+    TagThing.$inject = ["$resource", "spa.config.APP_CONFIG"];
+    function TagThing($resource, APP_CONFIG) {
+        return $resource(APP_CONFIG.server_url + "/api/type_of_things/:type_of_thing_id/thing_type_of_things/:id",
+            { thing_id: '@type_of_thing_id',
+                id: '@id'},
+            { update: {method:"PUT"}
+            });
+    }
+
+})();
+(function() {
+    "use strict";
+
+    angular
+        .module("spa.subjects")
+        .factory("spa.subjects.TagsAuthz", TagsAuthzFactory);
+
+    TagsAuthzFactory.$inject = ["spa.authz.Authz",
+        "spa.authz.BasePolicy"];
+    function TagsAuthzFactory(Authz, BasePolicy) {
+        function TagsAuthz() {
+            BasePolicy.call(this, "Thing");
+        }
+        //start with base class prototype definitions
+        TagsAuthz.prototype = Object.create(BasePolicy.prototype);
+        TagsAuthz.constructor = TagsAuthz;
+
+
+        //override and add additional methods
+        TagsAuthz.prototype.canQuery=function() {
+            //console.log("TagsAuthz.canQuery");
+            return Authz.isAuthenticated();
+        };
+
+        //add custom definitions
+        TagsAuthz.prototype.canAddImage=function(thing) {
+            return Authz.isMember(thing);
+        };
+        TagsAuthz.prototype.canUpdateImage=function(thing) {
+            return Authz.isOrganizer(thing)
+        };
+        TagsAuthz.prototype.canRemoveImage=function(thing) {
+            return Authz.isOrganizer(thing) || Authz.isAdmin();
+        };
+
+        return new TagsAuthz();
+    }
+})();
+(function() {
+    "use strict";
+
+    angular
+        .module("spa.subjects")
+        .directive("sdTagsAuthz", TagsAuthzDirective);
+
+    TagsAuthzDirective.$inject = [];
+
+    function TagsAuthzDirective() {
+        var directive = {
+            bindToController: true,
+            controller: ThingAuthzController,
+            controllerAs: "vm",
+            restrict: "A",
+            link: link
+        };
+        return directive;
+
+        function link(scope, element, attrs) {
+            console.log("TagsAuthzDirective", scope);
+        }
+    }
+
+    ThingAuthzController.$inject = ["$scope",
+        "spa.subjects.TagsAuthz"];
+    function ThingAuthzController($scope, TagsAuthz) {
+        var vm = this;
+        vm.authz={};
+        vm.authz.canUpdateItem = canUpdateItem;
+        vm.newItem=newItem;
+
+        activate();
+        return;
+        ////////////
+        function activate() {
+            vm.newItem(null);
+        }
+
+        function newItem(item) {
+            TagsAuthz.getAuthorizedUser().then(
+                function(user){ authzUserItem(item, user); },
+                function(user){ authzUserItem(item, user); });
+        }
+
+        function authzUserItem(item, user) {
+            console.log("new Item/Authz", item, user);
+
+            vm.authz.authenticated = TagsAuthz.isAuthenticated();
+            vm.authz.canQuery      = TagsAuthz.canQuery();
+            vm.authz.canCreate     = TagsAuthz.canCreate();
+            if (item && item.$promise) {
+                vm.authz.canUpdate      = false;
+                vm.authz.canDelete      = false;
+                vm.authz.canGetDetails  = false;
+                vm.authz.canUpdateImage = false;
+                vm.authz.canRemoveImage = false;
+                item.$promise.then(function(){ checkAccess(item); });
+            } else {
+                checkAccess(item);
+            }
+        }
+
+        function checkAccess(item) {
+            vm.authz.canUpdate     = TagsAuthz.canUpdate(item);
+            vm.authz.canDelete     = TagsAuthz.canDelete(item);
+            vm.authz.canGetDetails = TagsAuthz.canGetDetails(item);
+            vm.authz.canUpdateImage = TagsAuthz.canUpdateImage(item);
+            vm.authz.canRemoveImage = TagsAuthz.canRemoveImage(item);
+            console.log("checkAccess", item, vm.authz);
+        }
+
+        function canUpdateItem(item) {
+            return TagsAuthz.canUpdate(item);
+        }
+    }
+})();
+(function() {
+    "use strict";
+
+    angular
+        .module("spa.subjects")
+        .component("sdTagEditor", {
+            templateUrl: tagEditorTemplateUrl,
+            controller: TagEditorController,
+            bindings: {
+                authz: "<"
+            },
+            require: {
+                tagsAuthz: "^sdTagsAuthz"
+            }
+        })
+        .component("sdTagSelector", {
+            templateUrl: tagSelectorTemplateUrl,
+            controller: TagSelectorController,
+            bindings: {
+                authz: "<"
+            }
+        })
+    ;
+
+
+    tagEditorTemplateUrl.$inject = ["spa.config.APP_CONFIG"];
+    function tagEditorTemplateUrl(APP_CONFIG) {
+        return APP_CONFIG.tag_editor_html;
+    }
+    tagSelectorTemplateUrl.$inject = ["spa.config.APP_CONFIG"];
+    function tagSelectorTemplateUrl(APP_CONFIG) {
+        return APP_CONFIG.tag_selector_html;
+    }
+
+    TagEditorController.$inject = ["$scope","$q",
+        "$state","$stateParams",
+        "spa.authz.Authz",
+        "spa.subjects.Tag",
+        "spa.subjects.TagThing"];
+    function TagEditorController($scope, $q, $state, $stateParams,
+                                   Authz, Tag, TagThing) {
+        var vm=this;
+        vm.create = create;
+        vm.clear  = clear;
+        vm.update  = update;
+        vm.remove  = remove;
+        vm.haveDirtyLinks = haveDirtyLinks;
+        vm.updateImageLinks = updateImageLinks;
+
+        vm.$onInit = function() {
+            console.log("TagEditorController",$scope);
+            $scope.$watch(function(){ return Authz.getAuthorizedUserId(); },
+                function(){
+                    if ($stateParams.id) {
+                        reload($stateParams.id);
+                    } else {
+                        newResource();
+                    }
+                });
+        }
+
+        return;
+        //////////////
+        function newResource() {
+            vm.item = new Tag();
+            vm.tagsAuthz.newItem(vm.item);
+            return vm.item;
+        }
+
+        function reload(tagId) {
+            var itemId = tagId ? tagId : vm.item.id;
+            console.log("re/loading tag", itemId);
+            vm.images = TagThing.query({tag_id:itemId});
+            vm.item = Tag.get({id:itemId});
+            vm.tagsAuthz.newItem(vm.item);
+            vm.images.$promise.then(
+                function(){
+                    angular.forEach(vm.images, function(ti){
+                        ti.originalPriority = ti.priority;
+                    });
+                });
+            $q.all([vm.item.$promise,vm.images.$promise]).catch(handleError);
+        }
+        function haveDirtyLinks() {
+            for (var i=0; vm.images && i<vm.images.length; i++) {
+                var ti=vm.images[i];
+                if (ti.toRemove || ti.originalPriority != ti.priority) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function create() {
+            vm.item.errors = null;
+            vm.item.$save().then(
+                function(){
+                    console.log("tag created", vm.item);
+                    $state.go(".",{id:vm.item.id});
+                },
+                handleError);
+        }
+
+        function clear() {
+            newResource();
+            $state.go(".",{id: null});
+        }
+
+        function update() {
+            vm.item.errors = null;
+            var update=vm.item.$update();
+            updateImageLinks(update);
+        }
+        function updateImageLinks(promise) {
+            console.log("updating links to images");
+            var promises = [];
+            if (promise) { promises.push(promise); }
+            angular.forEach(vm.images, function(ti){
+                if (ti.toRemove) {
+                    promises.push(ti.$remove());
+                } else if (ti.originalPriority != ti.priority) {
+                    promises.push(ti.$update());
+                }
+            });
+
+            console.log("waiting for promises", promises);
+            $q.all(promises).then(
+                function(response){
+                    console.log("promise.all response", response);
+                    //update button will be disabled when not $dirty
+                    $scope.tagform.$setPristine();
+                    reload();
+                },
+                handleError);
+        }
+
+        function remove() {
+            vm.item.$remove().then(
+                function(){
+                    console.log("tag.removed", vm.item);
+                    clear();
+                },
+                handleError);
+        }
+
+        function handleError(response) {
+            console.log("error", response);
+            if (response.data) {
+                vm.item["errors"]=response.data.errors;
+            }
+            if (!vm.item.errors) {
+                vm.item["errors"]={}
+                vm.item["errors"]["full_messages"]=[response];
+            }
+            $scope.tagform.$setPristine();
+        }
+    }
+
+    TagSelectorController.$inject = ["$scope",
+        "$stateParams",
+        "spa.authz.Authz",
+        "spa.subjects.Tag"];
+    function TagSelectorController($scope, $stateParams, Authz, Tag) {
+        var vm=this;
+
+        vm.$onInit = function() {
+            console.log("TagSelectorController",$scope);
+            $scope.$watch(function(){ return Authz.getAuthorizedUserId(); },
+                function(){
+                    if (!$stateParams.id) {
+                        vm.items = Tag.query();
+                    }
+                });
+        }
+        return;
+        //////////////
+    }
+
+})();
 // SPA Demo Javascript Manifest File
+
+
+
+
+
+
 
 
 

@@ -29,6 +29,10 @@
                 url: "/things/:id",
                 templateUrl: APP_CONFIG.things_page_html
             })
+            .state("tags",{
+                url: "/tags/:id",
+                templateUrl: APP_CONFIG.tags_page_html
+            })
             .state("authn",{
                 url: "/authn",
                 templateUrl: APP_CONFIG.authn_page_html

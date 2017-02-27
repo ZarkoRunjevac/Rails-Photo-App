@@ -51,3 +51,9 @@
 //= require spa/subjects/things/things_authz.service
 //= require spa/subjects/things/things_authz.directive
 //= require spa/subjects/things/things.component
+
+//= require spa/subjects/tags/tags.service
+//= require spa/subjects/tags/tag_things.service
+//= require spa/subjects/tags/tags_authz.service
+//= require spa/subjects/tags/tags_authz.directive
+//= require spa/subjects/tags/tags.component

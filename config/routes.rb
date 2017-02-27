@@ -19,10 +19,13 @@ Rails.application.routes.draw do
     end
     resources :things, except: [:new, :edit] do
       resources :thing_images, only: [:index, :create, :update, :destroy]
-      resources :type_of_things, only: [:create, :destroy], controller: :thing_types_of_things
+      resources :type_of_things, only: [:create, :destroy, :linkable_type_of_things], controller: :thing_types_of_things
+      get "linkable_type_of_things" , controller: :thing_types_of_things, action: :linkable_type_of_things
     end
 
-    resources :type_of_things, except: [:new, :edit]
+    resources :type_of_things, except: [:new, :edit] do
+      resources :thing_type_of_things, only: [:create, :destroy]
+    end
   end
 
   root "ui#index"

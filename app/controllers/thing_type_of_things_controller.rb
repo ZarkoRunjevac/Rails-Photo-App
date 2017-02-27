@@ -8,14 +8,26 @@ class ThingTypeOfThingsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy]
   after_action :verify_authorized
 
-
-  def destroy
+=begin
+  def index
     authorize @thing_type_of_thing
-    @thing_type_of_thing.destroy
-    head :no_content
+    @things_type_of_thing = @type_of_thing.thing_type_of_things
+    #@thing_images = @thing.thing_images.prioritized.with_caption
+  end
+=end
+
+  def linkable_type_of_things
+    authorize ThingTypeOfThing
+    thing = Thing.find(params[:thing_id])
+    #@things=policy_scope(Thing.not_linked(image))
+    #need to exclude admins from seeing things they cannot link
+    @types_of_things=TypeOfThing.not_linked(thing)
+    @things=TypeOfThing::Scope.new(current_user,@types_of_things).user_roles(true,false)
+    @things=TypeOfThing.merge(@things)
+    render "type_of_things/index"
   end
 
-    def create
+  def create
     thing_type_of_thing = ThingTypeOfThing.new(thing_type_of_thing_create_params.merge({
                                                                      :type_of_thing_id=>params[:type_of_thing_id],
                                                                      :thing_id=>params[:thing_id],
@@ -36,6 +48,12 @@ class ThingTypeOfThingsController < ApplicationController
         render json: {errors:@thing_type_of_thing.errors.messages}, status: :unprocessable_entity
       end
     end
+  end
+
+  def destroy
+    authorize @thing_type_of_thing
+    @thing_type_of_thing.destroy
+    head :no_content
   end
 
   private

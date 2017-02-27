@@ -1,5 +1,9 @@
 class ThingTypeOfThingPolicy < ApplicationPolicy
-  
+
+  def index
+    @user && resource_organizer?
+  end
+
   def create?
     @user && resource_organizer?
   end
@@ -8,10 +12,12 @@ class ThingTypeOfThingPolicy < ApplicationPolicy
     @user && resource_organizer?
   end
 
+  def linkable_type_of_things?
+    @user && resource_organizer?
+  end
   def resource_organizer?
     @user.has_role([Role::ORGANIZER], Thing)
   end
-
   class Scope < Scope
     def resolve
       scope
