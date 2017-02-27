@@ -71,6 +71,7 @@
 
         vm.$onInit = function() {
             console.log("ImageEditorController",$scope);
+            console.log("Authz.getAuthorizedUserId()",Authz.getAuthorizedUserId());
             $scope.$watch(function(){ return Authz.getAuthorizedUserId(); },
                 function(){
                     if ($stateParams.id) {

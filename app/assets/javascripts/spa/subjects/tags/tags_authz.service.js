@@ -18,7 +18,7 @@
 
         //override and add additional methods
         TagsAuthz.prototype.canQuery=function() {
-            //console.log("TagsAuthz.canQuery");
+            console.log("TagsAuthz.canQuery");
             return Authz.isAuthenticated();
         };
 

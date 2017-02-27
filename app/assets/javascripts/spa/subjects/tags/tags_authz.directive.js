@@ -10,7 +10,7 @@
     function TagsAuthzDirective() {
         var directive = {
             bindToController: true,
-            controller: ThingAuthzController,
+            controller: TagAuthzController,
             controllerAs: "vm",
             restrict: "A",
             link: link
@@ -22,9 +22,9 @@
         }
     }
 
-    ThingAuthzController.$inject = ["$scope",
+    TagAuthzController.$inject = ["$scope",
         "spa.subjects.TagsAuthz"];
-    function ThingAuthzController($scope, TagsAuthz) {
+    function TagAuthzController($scope, TagsAuthz) {
         var vm = this;
         vm.authz={};
         vm.authz.canUpdateItem = canUpdateItem;

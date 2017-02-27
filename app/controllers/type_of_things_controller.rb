@@ -3,13 +3,14 @@ class TypeOfThingsController < ApplicationController
   wrap_parameters :type_of_thing, include: ["name"]
   before_action :authenticate_user!, only: [:index, :show,:create, :update, :destroy]
   after_action :verify_authorized
-  #after_action :verify_policy_scoped, only: [:index]
+  after_action :verify_policy_scoped, only: [:index]
 
   def index
     authorize TypeOfThing
-    #@types_of_thing = TypeOfThing.all
-    @types_of_thing = policy_scope(TypeOfThing.all)
-    @types_of_thing = TypeOfThingPolicy.merge(@types_of_thing)
+    #@type_of_things = TypeOfThing.all
+    @type_of_things = policy_scope(TypeOfThing.all)
+    @type_of_things = TypeOfThingPolicy.merge(@type_of_things)
+    
   end
 
   def show
