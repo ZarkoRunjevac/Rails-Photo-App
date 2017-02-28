@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
 
     resources :type_of_things, except: [:new, :edit] do
-      resources :thing_type_of_things, only: [:create, :destroy]
+      resources :thing_type_of_things, only: [:index,:create, :destroy]
     end
   end
 

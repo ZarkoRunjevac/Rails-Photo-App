@@ -1,7 +1,7 @@
 class ThingTypeOfThingPolicy < ApplicationPolicy
 
-  def index
-    @user && resource_organizer?
+  def index?
+    true
   end
 
   def create?

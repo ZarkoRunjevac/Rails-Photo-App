@@ -50704,7 +50704,7 @@ window.isEmpty = function(obj) {
             thing_editor_html: "/assets/spa/subjects/things/thing_editor-6fff71eb3a89ed7e0fdb48fc627b156ce7ab273fdf32e186d697724036cbdc2d.html",
             thing_selector_html: "/assets/spa/subjects/things/thing_selector-4e44d1bcbf0a304b0c63b76d9e3e2797e272c18f4a7fbcde1d23d12b52ca8413.html",
             tag_editor_html: "/spa/subjects/tags/tag_editor.html",
-            tag_selector_html: "/assets/spa/subjects/tags/tag_selector-1e53e289a562eacc3b8494e31f6e2f11e7ad1a8a7873b452a63e77c2136a6b38.html"
+            tag_selector_html: "/assets/spa/subjects/tags/tag_selector-d0b58628e62e71f6816d2c670c6ac36374f2e23925f134b672e0d9d07aef428e.html"
         });
 
 })();
@@ -51379,6 +51379,7 @@ window.isEmpty = function(obj) {
 
         vm.$onInit = function() {
             console.log("ImageEditorController",$scope);
+            console.log("Authz.getAuthorizedUserId()",Authz.getAuthorizedUserId());
             $scope.$watch(function(){ return Authz.getAuthorizedUserId(); },
                 function(){
                     if ($stateParams.id) {
@@ -51946,7 +51947,7 @@ window.isEmpty = function(obj) {
         "spa.authz.BasePolicy"];
     function TagsAuthzFactory(Authz, BasePolicy) {
         function TagsAuthz() {
-            BasePolicy.call(this, "Thing");
+            BasePolicy.call(this, "Tag");
         }
         //start with base class prototype definitions
         TagsAuthz.prototype = Object.create(BasePolicy.prototype);
@@ -51957,17 +51958,18 @@ window.isEmpty = function(obj) {
         TagsAuthz.prototype.canQuery=function() {
             //console.log("TagsAuthz.canQuery");
             return Authz.isAuthenticated();
+            //return true;
         };
 
         //add custom definitions
-        TagsAuthz.prototype.canAddImage=function(thing) {
-            return Authz.isMember(thing);
+        TagsAuthz.prototype.canAddImage=function(tag) {
+            return Authz.isMember(tag);
         };
-        TagsAuthz.prototype.canUpdateImage=function(thing) {
-            return Authz.isOrganizer(thing)
+        TagsAuthz.prototype.canUpdateImage=function(tag) {
+            return Authz.isOrganizer(tag)
         };
-        TagsAuthz.prototype.canRemoveImage=function(thing) {
-            return Authz.isOrganizer(thing) || Authz.isAdmin();
+        TagsAuthz.prototype.canRemoveImage=function(tag) {
+            return Authz.isOrganizer(tag) || Authz.isAdmin();
         };
 
         return new TagsAuthz();
@@ -51985,7 +51987,7 @@ window.isEmpty = function(obj) {
     function TagsAuthzDirective() {
         var directive = {
             bindToController: true,
-            controller: ThingAuthzController,
+            controller: TagAuthzController,
             controllerAs: "vm",
             restrict: "A",
             link: link
@@ -51997,9 +51999,9 @@ window.isEmpty = function(obj) {
         }
     }
 
-    ThingAuthzController.$inject = ["$scope",
+    TagAuthzController.$inject = ["$scope",
         "spa.subjects.TagsAuthz"];
-    function ThingAuthzController($scope, TagsAuthz) {
+    function TagAuthzController($scope, TagsAuthz) {
         var vm = this;
         vm.authz={};
         vm.authz.canUpdateItem = canUpdateItem;

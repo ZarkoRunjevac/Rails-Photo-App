@@ -9,7 +9,7 @@
         "spa.authz.BasePolicy"];
     function TagsAuthzFactory(Authz, BasePolicy) {
         function TagsAuthz() {
-            BasePolicy.call(this, "Thing");
+            BasePolicy.call(this, "Tag");
         }
         //start with base class prototype definitions
         TagsAuthz.prototype = Object.create(BasePolicy.prototype);
@@ -18,19 +18,20 @@
 
         //override and add additional methods
         TagsAuthz.prototype.canQuery=function() {
-            console.log("TagsAuthz.canQuery");
+            //console.log("TagsAuthz.canQuery");
             return Authz.isAuthenticated();
+            //return true;
         };
 
         //add custom definitions
-        TagsAuthz.prototype.canAddImage=function(thing) {
-            return Authz.isMember(thing);
+        TagsAuthz.prototype.canAddImage=function(tag) {
+            return Authz.isMember(tag);
         };
-        TagsAuthz.prototype.canUpdateImage=function(thing) {
-            return Authz.isOrganizer(thing)
+        TagsAuthz.prototype.canUpdateImage=function(tag) {
+            return Authz.isOrganizer(tag)
         };
-        TagsAuthz.prototype.canRemoveImage=function(thing) {
-            return Authz.isOrganizer(thing) || Authz.isAdmin();
+        TagsAuthz.prototype.canRemoveImage=function(tag) {
+            return Authz.isOrganizer(tag) || Authz.isAdmin();
         };
 
         return new TagsAuthz();

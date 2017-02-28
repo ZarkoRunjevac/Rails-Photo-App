@@ -15,8 +15,11 @@ class TypeOfThingsController < ApplicationController
 
   def show
     authorize @type_of_thing
-    type_of_thing = policy_scope(TypeOfThing.where(:id=>type_of_thing.id))
-    @type_of_thing = TypeOfThingPolicy.merge(type_of_thing).first
+
+    type_of_things = TypeOfThingPolicy::Scope.new(current_user,
+                                                  TypeOfThing.from('type_of_things t').where('t.id= (?)',@type_of_thing.id))
+                 .user_roles(false)
+    @type_of_thing = TypeOfThingPolicy.merge(type_of_things).first
   end
 
   def create

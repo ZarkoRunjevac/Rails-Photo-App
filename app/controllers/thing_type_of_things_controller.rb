@@ -3,18 +3,19 @@ class ThingTypeOfThingsController < ApplicationController
   helper ThingsHelper
   wrap_parameters :thing_type_of_thing, include: ["thing_type_of_thing_id", "thing_id"]
   before_action :authenticate_user!, only: [:create, :destroy]
-  before_action :get_thing, only: [:destroy]
+  #before_action :get_thing, only: [:index, :destroy]
+  before_action :get_type_of_thing, only: [:index, :destroy]
   before_action :get_thing_type_of_thing, only: [:destroy]
   before_action :authenticate_user!, only: [:create, :destroy]
   after_action :verify_authorized
 
-=begin
+
   def index
-    authorize @thing_type_of_thing
+    authorize ThingTypeOfThing
     @things_type_of_thing = @type_of_thing.thing_type_of_things
     #@thing_images = @thing.thing_images.prioritized.with_caption
   end
-=end
+
 
   def linkable_type_of_things
     authorize ThingTypeOfThing
