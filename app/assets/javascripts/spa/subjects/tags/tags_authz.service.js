@@ -34,6 +34,11 @@
             return Authz.isOrganizer(tag) || Authz.isAdmin();
         };
 
+        TagsAuthz.prototype.canCreate=function() {
+            //console.log("ItemsAuthz.canCreate");
+            return Authz.isAuthenticated();
+        };
+
         return new TagsAuthz();
     }
 })();

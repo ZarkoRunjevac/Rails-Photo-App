@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       resources :thing_type_of_things, only: [:index,:create, :destroy]
       get "thing_tags", controller: :thing_type_of_things, action: :thing_tags
       post "thing_tags", controller: :thing_type_of_things, action: :create
+      delete "thing_tags", controller: :thing_type_of_things, action: :destroy
     end
 
     resources :type_of_things, except: [:new, :edit] do

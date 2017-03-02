@@ -101,7 +101,7 @@
 
         <div class="linkable-things row col-lg-12"
          ng-show="$ctrl.linkable_tags.length>0 &&
-                $ctrl.authz.authenticated">
+                $ctrl.authz.authenticated && $ctrl.authz.canLinkTag">
         <label class="col-xs-3">Linkable Tags:</label>
         <div class="link-things" class="col-xs-9">
             <select name="linkable-things"

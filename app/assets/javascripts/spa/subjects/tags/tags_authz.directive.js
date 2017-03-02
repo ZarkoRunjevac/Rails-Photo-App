@@ -28,6 +28,7 @@
         var vm = this;
         vm.authz={};
         vm.authz.canUpdateItem = canUpdateItem;
+
         vm.newItem=newItem;
 
         activate();
@@ -53,8 +54,7 @@
                 vm.authz.canUpdate      = false;
                 vm.authz.canDelete      = false;
                 vm.authz.canGetDetails  = false;
-                vm.authz.canUpdateImage = false;
-                vm.authz.canRemoveImage = false;
+
                 item.$promise.then(function(){ checkAccess(item); });
             } else {
                 checkAccess(item);
@@ -65,8 +65,7 @@
             vm.authz.canUpdate     = TagsAuthz.canUpdate(item);
             vm.authz.canDelete     = TagsAuthz.canDelete(item);
             vm.authz.canGetDetails = TagsAuthz.canGetDetails(item);
-            vm.authz.canUpdateImage = TagsAuthz.canUpdateImage(item);
-            vm.authz.canRemoveImage = TagsAuthz.canRemoveImage(item);
+
             console.log("checkAccess", item, vm.authz);
         }
 

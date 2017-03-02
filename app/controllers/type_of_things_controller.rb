@@ -16,13 +16,6 @@ class TypeOfThingsController < ApplicationController
   end
 
   def show
-    #authorize @type_of_thing
-
-    #type_of_things = TypeOfThingPolicy::Scope.new(current_user,
-    #                                              TypeOfThing.from('type_of_things t').where('t.id= (?)',@type_of_thing.id))
-    #             .user_roles(false)
-    #@type_of_thing = TypeOfThingPolicy.merge(type_of_things).first
-
 
     authorize @type_of_thing
     type_of_things = policy_scope(TypeOfThing.from('type_of_things t').where('t.id= (?)',@type_of_thing.id))
@@ -31,15 +24,16 @@ class TypeOfThingsController < ApplicationController
 
   def create
     authorize TypeOfThing
-    type_of_thing = TypeOfThing.new(type_of_thing_params)
-    type_of_thing.creator_id=current_user.id
+    @type_of_thing = TypeOfThing.new(type_of_thing_params)
+    @type_of_thing.creator_id=current_user.id
 
     User.transaction do
-      if type_of_thing.save
-        role=current_user.add_role(Role::ORGANIZER, type_of_thing)
-        type_of_thing.user_roles << role.role_name
+      if @type_of_thing.save
+        role=current_user.add_role(Role::ORGANIZER, @type_of_thing)
+        @type_of_thing.user_roles << role.role_name
         role.save!
-        render :show, status: :created, location: type_of_thing
+        #binding.pry
+        render :show, status: :created, location: @type_of_thing
       else
         render json: {errors:type_of_thing.errors.messages}, status: :unprocessable_entity
       end
@@ -48,10 +42,10 @@ class TypeOfThingsController < ApplicationController
 
 
   def update
-    authorize type_of_thing
+    authorize @type_of_thing
     #type_of_thing = TypeOfThing.find(params[:id])
 
-    if type_of_thing.update(type_of_thing_params)
+    if @type_of_thing.update(type_of_thing_params)
       head :no_content
     else
       render json: {errors:type_of_thing.errors.messages}, status: :unprocessable_entity
@@ -60,8 +54,8 @@ class TypeOfThingsController < ApplicationController
 
 
   def destroy
-    authorize type_of_thing
-    type_of_thing.destroy
+    authorize @type_of_thing
+    @type_of_thing.destroy
 
     head :no_content
   end

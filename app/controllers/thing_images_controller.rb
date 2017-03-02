@@ -81,6 +81,7 @@ class ThingImagesController < ApplicationController
   end
 
   def thing_image_create_params
+
     params.require(:thing_image).tap {|p|
       #_ids only required in payload when not part of URI
       p.require(:image_id)    if !params[:image_id]

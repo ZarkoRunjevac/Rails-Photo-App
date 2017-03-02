@@ -73,13 +73,15 @@
             vm.things = TagThing.query({tag_id:itemId});
             vm.item = Tag.get({id:itemId});
             vm.tagsAuthz.newItem(vm.item);
+/*
             vm.tags.$promise.then(
                 function(){
                     angular.forEach(vm.tags, function(ti){
                         ti.originalPriority = ti.priority;
                     });
                 });
-            $q.all([vm.item.$promise,vm.tags.$promise]).catch(handleError);
+*/
+            $q.all([vm.item.$promise]).catch(handleError);
         }
         function haveDirtyLinks() {
             for (var i=0; vm.tags && i<vm.tags.length; i++) {

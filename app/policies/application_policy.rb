@@ -10,6 +10,7 @@ class ApplicationPolicy
     @user.has_role([Role::ADMIN, Role::ORGANIZER], @record.model_name.name, @record.id)
   end
   def organizer?
+    #binding.pry
     @user.has_role([Role::ORGANIZER], @record.model_name.name, @record.id)
   end
   def member_or_organizer?

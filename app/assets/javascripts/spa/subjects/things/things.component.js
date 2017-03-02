@@ -129,6 +129,15 @@
                 promises.push(resource.$promise);
             });
 
+
+            angular.forEach(vm.tags, function(ti){
+                if (ti.toRemove) {
+                    promises.push(ti.$remove());
+                } else if (ti.originalPriority != ti.priority) {
+                    promises.push(ti.$update());
+                }
+            });
+
             angular.forEach(vm.images, function(ti){
                 if (ti.toRemove) {
                     promises.push(ti.$remove());

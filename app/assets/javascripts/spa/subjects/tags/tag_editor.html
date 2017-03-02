@@ -55,7 +55,7 @@
 
     <div class="tag-controls"
          ng-show="$ctrl.authz.authenticated">
-        <button ng-show="!$ctrl.item.id && $ctrl.authz.canCreate"
+        <button name="image-create" ng-show="!$ctrl.item.id && $ctrl.authz.canCreate"
                 name="tag-create"
                 ng-disabled="tagform.$invalid"
                 type="submit"

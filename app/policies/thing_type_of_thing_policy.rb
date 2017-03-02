@@ -5,11 +5,14 @@ class ThingTypeOfThingPolicy < ApplicationPolicy
   end
 
   def thing_tags?
-    true
+    @user
   end
    def linkable_tags?
-    #@user.has_role([Role::ORGANIZER], Thing)
-    true
+    if @user
+      #@user.has_role([Role::ORGANIZER], Thing)
+      organizer?
+    end
+    #true
   end
 
   def create?

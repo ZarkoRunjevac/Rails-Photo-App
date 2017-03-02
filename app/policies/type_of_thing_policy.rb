@@ -8,6 +8,10 @@ class TypeOfThingPolicy < ApplicationPolicy
     @user
   end	
 
+  def create?
+    @user
+  end
+
   def update?
     organizer?
   end
