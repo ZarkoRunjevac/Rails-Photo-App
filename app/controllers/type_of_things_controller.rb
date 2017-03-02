@@ -1,24 +1,31 @@
 class TypeOfThingsController < ApplicationController
+  include ActionController::Helpers
+  helper ThingsHelper
   before_action :set_type_of_thing, only: [:show, :update, :destroy]
   wrap_parameters :type_of_thing, include: ["name"]
-  before_action :authenticate_user!, only: [:index, :show,:create, :update, :destroy]
+  before_action :authenticate_user!, only: [:create, :update, :destroy]
   after_action :verify_authorized
   after_action :verify_policy_scoped, only: [:index]
 
   def index
     authorize TypeOfThing
-    #@type_of_things = TypeOfThing.all
-    @type_of_things = policy_scope(TypeOfThing.all)
-    @type_of_things = TypeOfThingPolicy.merge(@type_of_things)
+    type_of_things = policy_scope(TypeOfThing.all)
+    #binding.pry
+    @type_of_things = TypeOfThingPolicy.merge(type_of_things)
     
   end
 
   def show
-    authorize @type_of_thing
+    #authorize @type_of_thing
 
-    type_of_things = TypeOfThingPolicy::Scope.new(current_user,
-                                                  TypeOfThing.from('type_of_things t').where('t.id= (?)',@type_of_thing.id))
-                 .user_roles(false)
+    #type_of_things = TypeOfThingPolicy::Scope.new(current_user,
+    #                                              TypeOfThing.from('type_of_things t').where('t.id= (?)',@type_of_thing.id))
+    #             .user_roles(false)
+    #@type_of_thing = TypeOfThingPolicy.merge(type_of_things).first
+
+
+    authorize @type_of_thing
+    type_of_things = policy_scope(TypeOfThing.from('type_of_things t').where('t.id= (?)',@type_of_thing.id))
     @type_of_thing = TypeOfThingPolicy.merge(type_of_things).first
   end
 

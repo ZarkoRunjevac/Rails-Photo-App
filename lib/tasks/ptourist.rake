@@ -46,6 +46,14 @@ namespace :ptourist do
     image=Image.create(:creator_id=>organizer.id,:caption=>img[:caption])
     organizer.add_role(Role::ORGANIZER, image).save
   end
+
+ def create_tag organizer, tag
+    puts "building tag for #{tag[:name]}, by #{organizer.name}"
+    type_of_thing=TypeOfThing.create(:creator_id=>organizer.id,:name=>tag[:name] )
+    organizer.add_role(Role::ORGANIZER, type_of_thing).save
+    type_of_thing
+  end
+
   def create_thing thing, organizer, members, images
     thing=Thing.create!(thing)
     organizer.add_role(Role::ORGANIZER, thing).save
@@ -347,14 +355,26 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     create_image organizer, image
 
 
+    #def create_tag organizer, tag
+
+    organizer=user("bobby")
+
+
     puts "Creating Types of things"
-    museum = TypeOfThing.create(name: "Museum")
-    TypeOfThing.create(name: "Train station")
-    shop = TypeOfThing.create(name: "Shop")
-    TypeOfThing.create(name: "Library")
-    TypeOfThing.create(name: "Church")
-    aquarium = TypeOfThing.create(name: "Aquarium")
-    cab = TypeOfThing.create(name: "Taxi stand")
+
+    museum = {name: "Museum"}
+    museum=create_tag organizer, museum
+
+    train= {name: "Train station"}
+    create_tag organizer,train
+    
+    shop=create_tag organizer,{name: "Shop"}
+
+    
+    organizer=user("jan")
+
+    aquarium=create_tag organizer, {name: "Aquarium"}
+    taxi= create_tag organizer, {name: "Taxi stand"}
 
     puts "add Marsha as Thing Organizer"
     marsha = user("marsha")
@@ -363,14 +383,18 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
 
     puts "Linking Types of things with things"
     thing = Thing.where(name: "B&O Railroad Museum").first
-    ThingTypeOfThing.create(type_of_thing: museum, thing: thing)
-    ThingTypeOfThing.create(type_of_thing: shop, thing: thing)
+    ThingTypeOfThing.create( thing: thing, type_of_thing: museum, :creator_id=>marsha.id)
+    ThingTypeOfThing.create( thing: thing, type_of_thing: shop, :creator_id=>marsha.id)
 
+    greg=user("greg")
+    greg.add_role(Role::ORGANIZER, Thing)
+    greg.save!
     thing = Thing.where(name: "National Aquarium").first
-    ThingTypeOfThing.create(type_of_thing: aquarium, thing: thing)
+    ThingTypeOfThing.create( thing: thing, type_of_thing: aquarium, :creator_id=>greg.id)
 
     thing = Thing.where(name: "Baltimore Water Taxi").first
-    ThingTypeOfThing.create(type_of_thing: cab, thing: thing)
+    ThingTypeOfThing.create( thing: thing, type_of_thing: taxi, :creator_id=>greg.id)
+
 
     puts "#{Thing.count} things created and #{ThingImage.count("distinct thing_id")} with images"
     puts "#{Image.count} images created and #{ThingImage.count("distinct image_id")} for things"

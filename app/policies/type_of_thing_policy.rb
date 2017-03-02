@@ -16,7 +16,7 @@ class TypeOfThingPolicy < ApplicationPolicy
     organizer_or_admin?
   end
 
-=begin
+
   class Scope < Scope
     def user_roles
       
@@ -30,9 +30,11 @@ class TypeOfThingPolicy < ApplicationPolicy
     def resolve
       user_roles
     end
-  end
-=end
 
+   
+  end
+
+=begin
   class Scope < Scope
     def user_roles members_only=true, allow_admin=true
       include_admin=allow_admin && @user && @user.is_admin?
@@ -51,5 +53,5 @@ class TypeOfThingPolicy < ApplicationPolicy
       user_roles
     end
   end
-
+=end
 end

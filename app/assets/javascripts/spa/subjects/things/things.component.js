@@ -36,16 +36,20 @@
         "$state","$stateParams",
         "spa.authz.Authz",
         "spa.subjects.Thing",
-        "spa.subjects.ThingImage"];
+        "spa.subjects.ThingImage",
+        "spa.subjects.ThingTag",
+        "spa.subjects.ThingLinkableTag"];
     function ThingEditorController($scope, $q, $state, $stateParams,
-                                   Authz, Thing, ThingImage) {
+                                   Authz, Thing, ThingImage, ThingTag, ThingLinkableTag) {
         var vm=this;
+        vm.selected_tags=[];
         vm.create = create;
         vm.clear  = clear;
         vm.update  = update;
         vm.remove  = remove;
         vm.haveDirtyLinks = haveDirtyLinks;
         vm.updateImageLinks = updateImageLinks;
+        vm.linkTags = linkTags;
 
         vm.$onInit = function() {
             console.log("ThingEditorController",$scope);
@@ -71,7 +75,9 @@
             var itemId = thingId ? thingId : vm.item.id;
             console.log("re/loading thing", itemId);
             vm.images = ThingImage.query({thing_id:itemId});
+            vm.tags = ThingTag.query({thing_id:itemId});
             vm.item = Thing.get({id:itemId});
+            vm.linkable_tags = ThingLinkableTag.query({thing_id:itemId});
             vm.thingsAuthz.newItem(vm.item);
             vm.images.$promise.then(
                 function(){
@@ -79,7 +85,7 @@
                         ti.originalPriority = ti.priority;
                     });
                 });
-            $q.all([vm.item.$promise,vm.images.$promise]).catch(handleError);
+            $q.all([vm.item.$promise,vm.images.$promise,vm.tags.$promise]).catch(handleError);
         }
         function haveDirtyLinks() {
             for (var i=0; vm.images && i<vm.images.length; i++) {
@@ -110,11 +116,19 @@
             vm.item.errors = null;
             var update=vm.item.$update();
             updateImageLinks(update);
+            //linkTags(update);
         }
         function updateImageLinks(promise) {
             console.log("updating links to images");
             var promises = [];
             if (promise) { promises.push(promise); }
+
+            angular.forEach(vm.selected_tags, function(linkable){
+                
+                 var resource=ThingTag.save({thing_id:vm.item.id}, {type_of_thing_id:linkable});
+                promises.push(resource.$promise);
+            });
+
             angular.forEach(vm.images, function(ti){
                 if (ti.toRemove) {
                     promises.push(ti.$remove());
@@ -139,6 +153,25 @@
                 function(){
                     console.log("thing.removed", vm.item);
                     clear();
+                },
+                handleError);
+        }
+
+        function linkTags(parentPromise) {
+            var promises=[];
+            if (parentPromise) { promises.push(parentPromise); }
+            angular.forEach(vm.selected_linkables, function(linkable){
+                var resource=ThingTag.save({thing_id:vm.item.id}, {tag_id:linkable});
+                promises.push(resource.$promise);
+            });
+
+            vm.selected_linkables=[];
+            console.log("waiting for promises", promises);
+            $q.all(promises).then(
+                function(response){
+                    console.log("promise.all response", response);
+                    $scope.thingform.$setPristine();
+                    reload();
                 },
                 handleError);
         }

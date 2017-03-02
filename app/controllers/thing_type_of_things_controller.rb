@@ -3,7 +3,7 @@ class ThingTypeOfThingsController < ApplicationController
   helper ThingsHelper
   wrap_parameters :thing_type_of_thing, include: ["thing_type_of_thing_id", "thing_id"]
   before_action :authenticate_user!, only: [:create, :destroy]
-  #before_action :get_thing, only: [:index, :destroy]
+  before_action :get_thing, only: [:thing_tags, :destroy]
   before_action :get_type_of_thing, only: [:index, :destroy]
   before_action :get_thing_type_of_thing, only: [:destroy]
   before_action :authenticate_user!, only: [:create, :destroy]
@@ -12,19 +12,25 @@ class ThingTypeOfThingsController < ApplicationController
 
   def index
     authorize ThingTypeOfThing
-    @things_type_of_thing = @type_of_thing.thing_type_of_things
-    #@thing_images = @thing.thing_images.prioritized.with_caption
+    @tags = @type_of_thing.thing_type_of_things.all.with_thing_name
+    
   end
 
+  def thing_tags
+    authorize ThingTypeOfThing
+    @tags=@thing.thing_type_of_things.all.with_tag_name
+    render :index
+  end
 
-  def linkable_type_of_things
+  def linkable_tags
     authorize ThingTypeOfThing
     thing = Thing.find(params[:thing_id])
     #@things=policy_scope(Thing.not_linked(image))
     #need to exclude admins from seeing things they cannot link
-    @types_of_things=TypeOfThing.not_linked(thing)
-    @things=TypeOfThing::Scope.new(current_user,@types_of_things).user_roles(true,false)
-    @things=TypeOfThing.merge(@things)
+    @type_of_things=TypeOfThing.not_linked(thing)
+    @type_of_things=TypeOfThingPolicy::Scope.new(current_user,@type_of_things).user_roles
+    @type_of_things=TypeOfThingPolicy.merge(@type_of_things)
+    
     render "type_of_things/index"
   end
 

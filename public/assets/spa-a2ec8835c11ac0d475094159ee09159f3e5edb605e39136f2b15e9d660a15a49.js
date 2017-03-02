@@ -50693,7 +50693,7 @@ window.isEmpty = function(obj) {
             authn_page_html: "/assets/spa/pages/authn_page-6c695ab9359c5ae6944b9c8b01d12ce3c2dbcb36f3f3c411d2ab1aeede2b0ac3.html",
             images_page_html: "/assets/spa/pages/images_page-99b48cd583cb28a576ef0f07f1d15a282a18a6f8e98e15ae53e9cc1645545346.html",
             things_page_html: "/assets/spa/pages/things_page-88afe8a9c14d121ce884fc9ebf9ba95a8144394b0003dc35c83844f7a13eae0c.html",
-            tags_page_html: "/assets/spa/pages/tags_page-002ca1de29c0c62d05289db16b43fca9bc7313849ec1378e85ed9b6b733f9c3f.html",
+            tags_page_html: "/assets/spa/pages/tags_page-6fbed0e7b24fbf092e8cba6533be73fb4765f8166c266451003f5d13cb29e83d.html",
 
             navbar_html: "/assets/spa/layout/navbar/navbar-12b8ec1381937890a5b926423958ec5c895ff89d13427d113110f4fd77a0cc08.html",
             authn_session_html: "/assets/spa/authn/authn_session/authn_session-bdcf2dbbe1b0cf62bd6140784e41060fe487fffa4f00680bd0dbea2745899c89.html",
@@ -50703,7 +50703,7 @@ window.isEmpty = function(obj) {
             image_editor_html: "/assets/spa/subjects/images/image_editor-de66fefb79bfff7cce25d8245d51ad297c3cd5c8a37431e9dc55c40a6757a0e7.html",
             thing_editor_html: "/assets/spa/subjects/things/thing_editor-6fff71eb3a89ed7e0fdb48fc627b156ce7ab273fdf32e186d697724036cbdc2d.html",
             thing_selector_html: "/assets/spa/subjects/things/thing_selector-4e44d1bcbf0a304b0c63b76d9e3e2797e272c18f4a7fbcde1d23d12b52ca8413.html",
-            tag_editor_html: "/spa/subjects/tags/tag_editor.html",
+            tag_editor_html: "/assets/spa/subjects/tags/tag_editor-976380d6163669ca59bd54c72004d927a9578abca9c1977c29cb52cf61009fd7.html",
             tag_selector_html: "/assets/spa/subjects/tags/tag_selector-d0b58628e62e71f6816d2c670c6ac36374f2e23925f134b672e0d9d07aef428e.html"
         });
 
@@ -51928,8 +51928,8 @@ window.isEmpty = function(obj) {
 
     TagThing.$inject = ["$resource", "spa.config.APP_CONFIG"];
     function TagThing($resource, APP_CONFIG) {
-        return $resource(APP_CONFIG.server_url + "/api/type_of_things/:type_of_thing_id/thing_type_of_things/:id",
-            { thing_id: '@type_of_thing_id',
+        return $resource(APP_CONFIG.server_url + "/api/type_of_things/:tag_id/thing_type_of_things/:id",
+            { type_of_thing_id: '@tag_id',
                 id: '@id'},
             { update: {method:"PUT"}
             });

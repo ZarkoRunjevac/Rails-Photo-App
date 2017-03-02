@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20170226140211) do
   create_table "thing_type_of_things", force: :cascade do |t|
     t.integer  "thing_id",         null: false
     t.integer  "type_of_thing_id", null: false
+    t.integer  "creator_id",       null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
@@ -78,9 +79,12 @@ ActiveRecord::Schema.define(version: 20170226140211) do
 
   create_table "type_of_things", force: :cascade do |t|
     t.string   "name",       null: false
+    t.integer  "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "type_of_things", ["creator_id"], name: "index_type_of_things_on_creator_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false

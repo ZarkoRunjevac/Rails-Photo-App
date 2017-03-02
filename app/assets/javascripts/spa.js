@@ -48,9 +48,11 @@
 //= require spa/subjects/images/images_authz.directive
 //= require spa/subjects/things/things.service
 //= require spa/subjects/things/thing_images.service
+//= require spa/subjects/things/thing_tags.service
 //= require spa/subjects/things/things_authz.service
 //= require spa/subjects/things/things_authz.directive
 //= require spa/subjects/things/things.component
+//= require spa/subjects/things/thing_linkable_tags.service
 
 //= require spa/subjects/tags/tags.service
 //= require spa/subjects/tags/tag_things.service

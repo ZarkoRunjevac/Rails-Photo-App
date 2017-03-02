@@ -70,20 +70,20 @@
         function reload(tagId) {
             var itemId = tagId ? tagId : vm.item.id;
             console.log("re/loading tag", itemId);
-            vm.images = TagThing.query({tag_id:itemId});
+            vm.things = TagThing.query({tag_id:itemId});
             vm.item = Tag.get({id:itemId});
             vm.tagsAuthz.newItem(vm.item);
-            vm.images.$promise.then(
+            vm.tags.$promise.then(
                 function(){
-                    angular.forEach(vm.images, function(ti){
+                    angular.forEach(vm.tags, function(ti){
                         ti.originalPriority = ti.priority;
                     });
                 });
-            $q.all([vm.item.$promise,vm.images.$promise]).catch(handleError);
+            $q.all([vm.item.$promise,vm.tags.$promise]).catch(handleError);
         }
         function haveDirtyLinks() {
-            for (var i=0; vm.images && i<vm.images.length; i++) {
-                var ti=vm.images[i];
+            for (var i=0; vm.tags && i<vm.tags.length; i++) {
+                var ti=vm.tags[i];
                 if (ti.toRemove || ti.originalPriority != ti.priority) {
                     return true;
                 }
@@ -112,10 +112,10 @@
             updateImageLinks(update);
         }
         function updateImageLinks(promise) {
-            console.log("updating links to images");
+            console.log("updating links to tags");
             var promises = [];
             if (promise) { promises.push(promise); }
-            angular.forEach(vm.images, function(ti){
+            angular.forEach(vm.tags, function(ti){
                 if (ti.toRemove) {
                     promises.push(ti.$remove());
                 } else if (ti.originalPriority != ti.priority) {

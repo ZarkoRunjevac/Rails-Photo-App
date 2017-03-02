@@ -10,6 +10,7 @@ class ThingsController < ApplicationController
   def index
     authorize Thing
     things = policy_scope(Thing.all)
+    
     @things = ThingPolicy.merge(things)
   end
 

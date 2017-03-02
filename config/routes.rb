@@ -20,7 +20,10 @@ Rails.application.routes.draw do
     resources :things, except: [:new, :edit] do
       resources :thing_images, only: [:index, :create, :update, :destroy]
       resources :type_of_things, only: [:create, :destroy, :linkable_type_of_things], controller: :thing_type_of_thingss
-      get "linkable_type_of_things" , controller: :thing_type_of_thingss, action: :linkable_type_of_things
+      get "linkable_tags" , controller: :thing_type_of_things, action: :linkable_tags
+      resources :thing_type_of_things, only: [:index,:create, :destroy]
+      get "thing_tags", controller: :thing_type_of_things, action: :thing_tags
+      post "thing_tags", controller: :thing_type_of_things, action: :create
     end
 
     resources :type_of_things, except: [:new, :edit] do
