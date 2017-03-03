@@ -36,7 +36,7 @@ class ThingTypeOfThingsController < ApplicationController
   end
 
   def create
-
+    #binding.pry
     thing_type_of_thing = ThingTypeOfThing.new(:thing_id=>params[:thing_id],:type_of_thing_id=>params[:type_of_thing_id])
     thing=Thing.where(id:thing_type_of_thing.thing_id).first
     if !thing
@@ -57,8 +57,8 @@ class ThingTypeOfThingsController < ApplicationController
   end
 
   def destroy
+    #binding.pry
     authorize @thing, :remove_tag?
-
     @thing_type_of_thing.destroy
     head :no_content
   end

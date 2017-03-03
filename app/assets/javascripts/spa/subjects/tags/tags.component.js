@@ -36,9 +36,10 @@
         "$state","$stateParams",
         "spa.authz.Authz",
         "spa.subjects.Tag",
-        "spa.subjects.TagThing"];
+        "spa.subjects.TagThing",
+        "spa.subjects.TagsAuthz"];
     function TagEditorController($scope, $q, $state, $stateParams,
-                                   Authz, Tag, TagThing) {
+                                   Authz, Tag, TagThing,TagsAuthz) {
         var vm=this;
         vm.create = create;
         vm.clear  = clear;
@@ -70,18 +71,12 @@
         function reload(tagId) {
             var itemId = tagId ? tagId : vm.item.id;
             console.log("re/loading tag", itemId);
-            vm.things = TagThing.query({tag_id:itemId});
-            vm.item = Tag.get({id:itemId});
-            vm.tagsAuthz.newItem(vm.item);
-/*
-            vm.tags.$promise.then(
-                function(){
-                    angular.forEach(vm.tags, function(ti){
-                        ti.originalPriority = ti.priority;
-                    });
-                });
-*/
-            $q.all([vm.item.$promise]).catch(handleError);
+            if(TagsAuthz.canQuery()) vm.things = TagThing.query({tag_id:itemId});
+            if(TagsAuthz.canQuery()) vm.item = Tag.get({id:itemId});
+            if(vm.item){
+                vm.tagsAuthz.newItem(vm.item);
+                $q.all([vm.item.$promise]).catch(handleError);
+            }
         }
         function haveDirtyLinks() {
             for (var i=0; vm.tags && i<vm.tags.length; i++) {
@@ -111,7 +106,7 @@
         function update() {
             vm.item.errors = null;
             var update=vm.item.$update();
-            updateImageLinks(update);
+            //updateImageLinks(update);
         }
         function updateImageLinks(promise) {
             console.log("updating links to tags");
@@ -161,8 +156,9 @@
     TagSelectorController.$inject = ["$scope",
         "$stateParams",
         "spa.authz.Authz",
-        "spa.subjects.Tag"];
-    function TagSelectorController($scope, $stateParams, Authz, Tag) {
+        "spa.subjects.Tag",
+        "spa.subjects.TagsAuthz"];
+    function TagSelectorController($scope, $stateParams, Authz, Tag,TagsAuthz) {
         var vm=this;
 
         vm.$onInit = function() {
@@ -170,7 +166,7 @@
             $scope.$watch(function(){ return Authz.getAuthorizedUserId(); },
                 function(){
                     if (!$stateParams.id) {
-                        vm.items = Tag.query();
+                        if(TagsAuthz.canQuery()) vm.items = Tag.query();
                     }
                 });
         }

@@ -38,9 +38,10 @@
         "spa.subjects.Thing",
         "spa.subjects.ThingImage",
         "spa.subjects.ThingTag",
-        "spa.subjects.ThingLinkableTag"];
+        "spa.subjects.ThingLinkableTag",
+        "spa.subjects.ThingsAuthz"];
     function ThingEditorController($scope, $q, $state, $stateParams,
-                                   Authz, Thing, ThingImage, ThingTag, ThingLinkableTag) {
+                                   Authz, Thing, ThingImage, ThingTag, ThingLinkableTag,ThingsAuthz) {
         var vm=this;
         vm.selected_tags=[];
         vm.create = create;
@@ -75,9 +76,9 @@
             var itemId = thingId ? thingId : vm.item.id;
             console.log("re/loading thing", itemId);
             vm.images = ThingImage.query({thing_id:itemId});
-            vm.tags = ThingTag.query({thing_id:itemId});
+            if(ThingsAuthz.canQueryTags(vm.item)) vm.tags = ThingTag.query({thing_id:itemId});
             vm.item = Thing.get({id:itemId});
-            vm.linkable_tags = ThingLinkableTag.query({thing_id:itemId});
+            if(Authz.isAuthenticated()) vm.linkable_tags = ThingLinkableTag.query({thing_id:itemId});
             vm.thingsAuthz.newItem(vm.item);
             vm.images.$promise.then(
                 function(){
@@ -125,7 +126,7 @@
 
             angular.forEach(vm.selected_tags, function(linkable){
                 
-                 var resource=ThingTag.save({thing_id:vm.item.id}, {type_of_thing_id:linkable});
+                var resource=ThingTag.save({thing_id:vm.item.id}, {type_of_thing_id:linkable});
                 promises.push(resource.$promise);
             });
 
@@ -133,8 +134,6 @@
             angular.forEach(vm.tags, function(ti){
                 if (ti.toRemove) {
                     promises.push(ti.$remove());
-                } else if (ti.originalPriority != ti.priority) {
-                    promises.push(ti.$update());
                 }
             });
 
@@ -145,7 +144,7 @@
                     promises.push(ti.$update());
                 }
             });
-
+            vm.selected_tags=[];
             console.log("waiting for promises", promises);
             $q.all(promises).then(
                 function(response){

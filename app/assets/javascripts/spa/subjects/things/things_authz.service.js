@@ -36,6 +36,10 @@
             return Authz.isOrganizer(thing) || Authz.isAdmin();
         };
 
+        ThingsAuthz.prototype.canQueryTags=function() {
+
+            return Authz.isAuthenticated();
+        };
 
         return new ThingsAuthz();
     }

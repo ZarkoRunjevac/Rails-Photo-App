@@ -1,8 +1,10 @@
 <form class="tag-form row" name="tagform">
-    <span class="tag_id id">{{$ctrl.item.id}}</span>
+
     <span class="invalid">{{$ctrl.item.errors.full_messages}}</span>
 
-    <div class="tag-name row col-lg-12">
+    <div class="tag-name row col-lg-12"
+         ng-show="$ctrl.authz.canQuery">
+
         <label class="col-xs-3">Name:</label>
         <input class="col-xs-9"
                name="tag-name"
@@ -14,34 +16,8 @@
         <span class="invalid">{{$ctrl.item.errors.name}}</span>
     </div>
 
-    <!--<div class="tag-desc row col-lg-12"
-         ng-show="tagform.$valid">
-        <label class="col-xs-3">Description:</label>
-        <textarea class="col-xs-9"
-                  name="tag-desc"
-                  ng-model="$ctrl.item.description"
-                  ng-readonly="!$ctrl.authz.canUpdate"
-                  type="text"
-                  size="80"
-                  maxlength="4000"/>
-        <span class="invalid">{{$ctrl.item.errors.description}}</span>
-    </div>
-
-    <div class="tag-notes row col-lg-12"
-         ng-show="$ctrl.authz.canGetDetails && tagform.$valid">
-        <label class="col-xs-3">Notes:</label>
-        <textarea class="col-xs-9"
-                  name="tag-notes"
-                  ng-model="$ctrl.item.notes"
-                  ng-readonly="!$ctrl.authz.canUpdate"
-                  type="text"
-                  size="80"
-                  maxlength="4000"/>
-        <span class="invalid">{{$ctrl.item.errors.notes}}</span>
-    </div>-->
-
     <div class="image-things row col-lg-12"
-         ng-show="$ctrl.item.id">
+         ng-show="$ctrl.item.id && $ctrl.authz.canQuery">
         <label class="col-xs-3">Related Things:</label>
         <ul class="image-things col-xs-9">
             <li ng-repeat="ti in $ctrl.things | orderBy:'priority'">
@@ -74,13 +50,7 @@
                    !tagform['tag-desc'].$dirty &&
                    !tagform['tag-notes'].$dirty)"
                 ng-click="$ctrl.update()">Update Tag</button>
-        <button name="tag-images-update"
-                type="submit"
-                data-ng-show="$ctrl.haveDirtyLinks() &&
-                  (!tagform['tag-name'].$dirty &&
-                   !tagform['tag-desc'].$dirty &&
-                   !tagform['tag-notes'].$dirty)"
-                ng-click="$ctrl.updateImageLinks()">Update Image Links</button>
+
       </span>
 
             <button name="tag-delete"
