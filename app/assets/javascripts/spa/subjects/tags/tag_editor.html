@@ -26,12 +26,12 @@
                     {{ti.thing_name}}</a>
             </li>
         </ul>
-        <span class="invalid">{{$ctrl.item.errors.thing_images}}</span>
+        <span class="invalid">{{$ctrl.item.errors.things}}</span>
     </div>
 
     <div class="tag-controls"
          ng-show="$ctrl.authz.authenticated">
-        <button name="image-create" ng-show="!$ctrl.item.id && $ctrl.authz.canCreate"
+        <button name="tag-create" ng-show="!$ctrl.item.id && $ctrl.authz.canCreate"
                 name="tag-create"
                 ng-disabled="tagform.$invalid"
                 type="submit"
@@ -40,15 +40,11 @@
         <div ng-show="$ctrl.item.id">
       <span class="tag-modify"
             data-ng-hide="!$ctrl.authz.canUpdate &&
-                          !$ctrl.authz.canUpdateImage &&
-                          !$ctrl.authz.canRemoveImage">
+                          !$ctrl.authz.canUpdateTag &&
+                          !$ctrl.authz.canRemoveTag">
         <button name="tag-update"
                 type="submit"
                 ng-disabled="tagform.$invalid || !tagform.$dirty"
-                data-ng-hide="$ctrl.haveDirtyLinks() &&
-                  (!tagform['tag-name'].$dirty &&
-                   !tagform['tag-desc'].$dirty &&
-                   !tagform['tag-notes'].$dirty)"
                 ng-click="$ctrl.update()">Update Tag</button>
 
       </span>
@@ -57,7 +53,7 @@
                     type="submit"
                     ng-show="$ctrl.authz.canDelete"
                     ng-click="$ctrl.remove()">Delete Tag</button>
-            <button name="image-clear"
+            <button name="tag-clear"
                     type="submit"
                     ng-click="$ctrl.clear()">Clear Tag</button>
         </div>

@@ -4,7 +4,6 @@
             <a ui-sref="tags({id:item.id})">
                 <span class="tag_id id">{{item.id}}</span>
                 {{item.name}}
-
                 <span ng-show="$ctrl.authz.canUpdateItem(item)"> *</span>
             </a>
         </li>

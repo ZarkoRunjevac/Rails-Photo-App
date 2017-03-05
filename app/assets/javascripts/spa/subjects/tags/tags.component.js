@@ -45,8 +45,7 @@
         vm.clear  = clear;
         vm.update  = update;
         vm.remove  = remove;
-        vm.haveDirtyLinks = haveDirtyLinks;
-        vm.updateImageLinks = updateImageLinks;
+        //vm.updateImageLinks = updateImageLinks;
 
         vm.$onInit = function() {
             console.log("TagEditorController",$scope);
@@ -78,15 +77,7 @@
                 $q.all([vm.item.$promise]).catch(handleError);
             }
         }
-        function haveDirtyLinks() {
-            for (var i=0; vm.tags && i<vm.tags.length; i++) {
-                var ti=vm.tags[i];
-                if (ti.toRemove || ti.originalPriority != ti.priority) {
-                    return true;
-                }
-            }
-            return false;
-        }
+
 
         function create() {
             vm.item.errors = null;
@@ -106,31 +97,9 @@
         function update() {
             vm.item.errors = null;
             var update=vm.item.$update();
-            //updateImageLinks(update);
+            
         }
-        function updateImageLinks(promise) {
-            console.log("updating links to tags");
-            var promises = [];
-            if (promise) { promises.push(promise); }
-            angular.forEach(vm.tags, function(ti){
-                if (ti.toRemove) {
-                    promises.push(ti.$remove());
-                } else if (ti.originalPriority != ti.priority) {
-                    promises.push(ti.$update());
-                }
-            });
-
-            console.log("waiting for promises", promises);
-            $q.all(promises).then(
-                function(response){
-                    console.log("promise.all response", response);
-                    //update button will be disabled when not $dirty
-                    $scope.tagform.$setPristine();
-                    reload();
-                },
-                handleError);
-        }
-
+        
         function remove() {
             vm.item.$remove().then(
                 function(){

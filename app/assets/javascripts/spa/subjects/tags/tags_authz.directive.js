@@ -54,7 +54,9 @@
                 vm.authz.canUpdate      = false;
                 vm.authz.canDelete      = false;
                 vm.authz.canGetDetails  = false;
-
+                vm.authz.canAddTag      = false;
+                vm.authz.canUpdateTag   = false;
+                vm.authz.canRemoveTag   = false;
                 item.$promise.then(function(){ checkAccess(item); });
             } else {
                 checkAccess(item);
@@ -65,7 +67,9 @@
             vm.authz.canUpdate     = TagsAuthz.canUpdate(item);
             vm.authz.canDelete     = TagsAuthz.canDelete(item);
             vm.authz.canGetDetails = TagsAuthz.canGetDetails(item);
-
+            vm.authz.canAddTag      = TagsAuthz.canAddTag(item);
+            vm.authz.canUpdateTag   = TagsAuthz.canUpdateTag(item);
+            vm.authz.canRemoveTag   = TagsAuthz.canRemoveTag(item);
             console.log("checkAccess", item, vm.authz);
         }
 

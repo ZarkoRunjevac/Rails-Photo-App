@@ -24,13 +24,13 @@
         };
 
         //add custom definitions
-        TagsAuthz.prototype.canAddImage=function(tag) {
+        TagsAuthz.prototype.canAddTag=function(tag) {
             return Authz.isMember(tag);
         };
-        TagsAuthz.prototype.canUpdateImage=function(tag) {
+        TagsAuthz.prototype.canUpdateTag=function(tag) {
             return Authz.isOrganizer(tag)
         };
-        TagsAuthz.prototype.canRemoveImage=function(tag) {
+        TagsAuthz.prototype.canRemoveTag=function(tag) {
             return Authz.isOrganizer(tag) || Authz.isAdmin();
         };
 
