@@ -368,7 +368,7 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     museum = {name: "Museum"}
     museum=create_tag organizer, museum
     
-   mallcreate_tag organizer,{name: "Mall"}
+    mall=create_tag organizer,{name: "Mall"}
     
     organizer=user("jan")
 
