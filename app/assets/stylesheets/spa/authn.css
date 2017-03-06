@@ -12,3 +12,7 @@ span#user_id {
 div#logout-identity {
     text-align: center; /* keep organized as name in label gets long */
 }
+
+.initialism{
+    color: #F8E514;
+}
