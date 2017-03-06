@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   
-  #resources :thing_type_of_things, except: [:new, :edit]
+  #resources :thing_tags, except: [:new, :edit]
   get 'authn/whoami',  defaults: {format: :json}
 
   get 'authn/checkme'
@@ -19,16 +19,16 @@ Rails.application.routes.draw do
     end
     resources :things, except: [:new, :edit] do
       resources :thing_images, only: [:index, :create, :update, :destroy]
-      resources :type_of_things, only: [:create, :destroy, :linkable_type_of_things], controller: :thing_type_of_thingss
-      get "linkable_tags" , controller: :thing_type_of_things, action: :linkable_tags
-      resources :thing_type_of_things, only: [:index,:create, :destroy]
-      get "thing_tags", controller: :thing_type_of_things, action: :thing_tags
-      post "thing_tags", controller: :thing_type_of_things, action: :create
-      delete "thing_tags", controller: :thing_type_of_things, action: :destroy
+      resources :tags, only: [:create, :destroy, :linkable_tags], controller: :thing_tags
+      get "linkable_tags" , controller: :thing_tags, action: :linkable_tags
+      resources :thing_tags, only: [:index,:create, :destroy]
+      get "thingtags", controller: :thing_tags, action: :thingtags
+      post "thingtags", controller: :thing_tags, action: :create
+      delete "thingtags", controller: :thing_tags, action: :destroy
     end
 
-    resources :type_of_things, except: [:new, :edit] do
-      resources :thing_type_of_things, only: [:index,:create, :destroy]
+    resources :tags, except: [:new, :edit] do
+      resources :thing_tags, only: [:index,:create, :destroy]
     end
   end
 

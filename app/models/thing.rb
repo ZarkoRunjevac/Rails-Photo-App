@@ -4,8 +4,8 @@ class Thing < ActiveRecord::Base
 
   has_many :thing_images, inverse_of: :thing, dependent: :destroy
 
-  has_many :thing_type_of_things, inverse_of: :thing, dependent: :destroy
-  has_many :type_of_things, through: :thing_type_of_things
+  has_many :thing_tags, inverse_of: :thing, dependent: :destroy
+  has_many :tags, through: :thing_tags
 
   scope :not_linked, ->(image) { where.not(:id=>ThingImage.select(:thing_id)
                                                     .where(:image=>image)) }

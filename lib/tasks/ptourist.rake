@@ -49,9 +49,9 @@ namespace :ptourist do
 
  def create_tag organizer, tag
     puts "building tag for #{tag[:name]}, by #{organizer.name}"
-    type_of_thing=TypeOfThing.create(:creator_id=>organizer.id,:name=>tag[:name] )
-    organizer.add_role(Role::ORGANIZER, type_of_thing).save
-    type_of_thing
+    tag=Tag.create(:creator_id=>organizer.id,:name=>tag[:name] )
+    organizer.add_role(Role::ORGANIZER, tag).save
+    tag
   end
 
   def create_thing thing, organizer, members, images
@@ -360,16 +360,15 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     organizer=user("bobby")
 
 
-    puts "Creating Types of things"
+    puts "Creating Tags"
+
+    train_stop= {name: "Train stop"}
+    create_tag organizer,train_stop
 
     museum = {name: "Museum"}
     museum=create_tag organizer, museum
-
-    train= {name: "Train station"}
-    create_tag organizer,train
     
-    shop=create_tag organizer,{name: "Shop"}
-
+   mallcreate_tag organizer,{name: "Mall"}
     
     organizer=user("jan")
 
@@ -381,19 +380,19 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     marsha.add_role(Role::ORGANIZER, Thing)
     marsha.save!
 
-    puts "Linking Types of things with things"
+    puts "Linking Tags with things"
     thing = Thing.where(name: "B&O Railroad Museum").first
-    ThingTypeOfThing.create( thing: thing, type_of_thing: museum, :creator_id=>marsha.id)
-    ThingTypeOfThing.create( thing: thing, type_of_thing: shop, :creator_id=>marsha.id)
+    ThingTag.create( thing: thing, tag: museum, :creator_id=>marsha.id)
+    ThingTag.create( thing: thing, tag: mall, :creator_id=>marsha.id)
 
     greg=user("greg")
     greg.add_role(Role::ORGANIZER, Thing)
     greg.save!
     thing = Thing.where(name: "National Aquarium").first
-    ThingTypeOfThing.create( thing: thing, type_of_thing: aquarium, :creator_id=>greg.id)
+    ThingTag.create( thing: thing, tag: aquarium, :creator_id=>greg.id)
 
     thing = Thing.where(name: "Baltimore Water Taxi").first
-    ThingTypeOfThing.create( thing: thing, type_of_thing: taxi, :creator_id=>greg.id)
+    ThingTag.create( thing: thing, tag: taxi, :creator_id=>greg.id)
 
 
     puts "#{Thing.count} things created and #{ThingImage.count("distinct thing_id")} with images"

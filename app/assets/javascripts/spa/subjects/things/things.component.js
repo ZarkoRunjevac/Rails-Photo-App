@@ -126,7 +126,7 @@
 
             angular.forEach(vm.selected_tags, function(linkable){
                 
-                var resource=ThingTag.save({thing_id:vm.item.id}, {type_of_thing_id:linkable});
+                var resource=ThingTag.save({thing_id:vm.item.id}, {tag_id:linkable});
                 promises.push(resource.$promise);
             });
 

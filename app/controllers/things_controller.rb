@@ -8,7 +8,7 @@ class ThingsController < ApplicationController
   after_action :verify_policy_scoped, only: [:index]
 
   def index
-    #binding.pry
+
     authorize Thing
     things = policy_scope(Thing.all)
     

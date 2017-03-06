@@ -7,7 +7,7 @@
 
     TagFactory.$inject = ["$resource", "spa.config.APP_CONFIG"];
     function TagFactory($resource, APP_CONFIG) {
-        var service = $resource(APP_CONFIG.server_url + "/api/type_of_things/:id",
+        var service = $resource(APP_CONFIG.server_url + "/api/tags/:id",
             { id: '@id' },
             {
                 update: {method: "PUT"},

@@ -7,8 +7,8 @@
 
     TagThing.$inject = ["$resource", "spa.config.APP_CONFIG"];
     function TagThing($resource, APP_CONFIG) {
-        return $resource(APP_CONFIG.server_url + "/api/type_of_things/:tag_id/thing_type_of_things/:id",
-            { type_of_thing_id: '@tag_id',
+        return $resource(APP_CONFIG.server_url + "/api/tags/:tag_id/thing_tags/:id",
+            { tag_id: '@tag_id',
                 id: '@id'},
             { update: {method:"PUT"}
             });

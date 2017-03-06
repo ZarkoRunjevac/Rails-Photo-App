@@ -42,6 +42,15 @@ ActiveRecord::Schema.define(version: 20170226140211) do
 
   add_index "roles", ["user_id"], name: "index_roles_on_user_id", using: :btree
 
+  create_table "tags", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.integer  "creator_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "tags", ["creator_id"], name: "index_tags_on_creator_id", using: :btree
+
   create_table "thing_images", force: :cascade do |t|
     t.integer  "image_id",               null: false
     t.integer  "thing_id",               null: false
@@ -55,17 +64,17 @@ ActiveRecord::Schema.define(version: 20170226140211) do
   add_index "thing_images", ["image_id"], name: "index_thing_images_on_image_id", using: :btree
   add_index "thing_images", ["thing_id"], name: "index_thing_images_on_thing_id", using: :btree
 
-  create_table "thing_type_of_things", force: :cascade do |t|
-    t.integer  "thing_id",         null: false
-    t.integer  "type_of_thing_id", null: false
-    t.integer  "creator_id",       null: false
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+  create_table "thing_tags", force: :cascade do |t|
+    t.integer  "thing_id",   null: false
+    t.integer  "tag_id",     null: false
+    t.integer  "creator_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "thing_type_of_things", ["thing_id", "type_of_thing_id"], name: "index_thing_type_of_things_on_thing_id_and_type_of_thing_id", unique: true, using: :btree
-  add_index "thing_type_of_things", ["thing_id"], name: "index_thing_type_of_things_on_thing_id", using: :btree
-  add_index "thing_type_of_things", ["type_of_thing_id"], name: "index_thing_type_of_things_on_type_of_thing_id", using: :btree
+  add_index "thing_tags", ["tag_id"], name: "index_thing_tags_on_tag_id", using: :btree
+  add_index "thing_tags", ["thing_id", "tag_id"], name: "index_thing_tags_on_thing_id_and_tag_id", unique: true, using: :btree
+  add_index "thing_tags", ["thing_id"], name: "index_thing_tags_on_thing_id", using: :btree
 
   create_table "things", force: :cascade do |t|
     t.string   "name",        null: false
@@ -76,15 +85,6 @@ ActiveRecord::Schema.define(version: 20170226140211) do
   end
 
   add_index "things", ["name"], name: "index_things_on_name", using: :btree
-
-  create_table "type_of_things", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.integer  "creator_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "type_of_things", ["creator_id"], name: "index_type_of_things_on_creator_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
@@ -119,6 +119,6 @@ ActiveRecord::Schema.define(version: 20170226140211) do
   add_foreign_key "roles", "users"
   add_foreign_key "thing_images", "images"
   add_foreign_key "thing_images", "things"
-  add_foreign_key "thing_type_of_things", "things"
-  add_foreign_key "thing_type_of_things", "type_of_things"
+  add_foreign_key "thing_tags", "tags"
+  add_foreign_key "thing_tags", "things"
 end
