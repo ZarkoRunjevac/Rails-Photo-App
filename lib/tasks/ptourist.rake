@@ -362,18 +362,18 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
 
     puts "Creating Tags"
 
-    train_stop= {name: "Train stop"}
-    create_tag organizer,train_stop
+    tag3= {name: "Tag 3"}
+    create_tag organizer,tag3
 
-    museum = {name: "Museum"}
-    museum=create_tag organizer, museum
+    tag2 = {name: "Tag 2"}
+    tag2=create_tag organizer, tag2
     
-    mall=create_tag organizer,{name: "Mall"}
+    tag1=create_tag organizer,{name: "Tag 1"}
     
     organizer=user("jan")
 
-    aquarium=create_tag organizer, {name: "Aquarium"}
-    taxi= create_tag organizer, {name: "Taxi stand"}
+    tag4=create_tag organizer, {name: "Tag 4"}
+    tag5= create_tag organizer, {name: "Tag 5"}
 
     puts "add Marsha as Thing Organizer"
     marsha = user("marsha")
@@ -382,17 +382,17 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
 
     puts "Linking Tags with things"
     thing = Thing.where(name: "B&O Railroad Museum").first
-    ThingTag.create( thing: thing, tag: museum, :creator_id=>marsha.id)
-    ThingTag.create( thing: thing, tag: mall, :creator_id=>marsha.id)
+    ThingTag.create( thing: thing, tag: tag2, :creator_id=>marsha.id)
+    ThingTag.create( thing: thing, tag: tag1, :creator_id=>marsha.id)
 
     greg=user("greg")
     greg.add_role(Role::ORGANIZER, Thing)
     greg.save!
     thing = Thing.where(name: "National Aquarium").first
-    ThingTag.create( thing: thing, tag: aquarium, :creator_id=>greg.id)
+    ThingTag.create( thing: thing, tag: tag4, :creator_id=>greg.id)
 
     thing = Thing.where(name: "Baltimore Water Taxi").first
-    ThingTag.create( thing: thing, tag: taxi, :creator_id=>greg.id)
+    ThingTag.create( thing: thing, tag: tag5, :creator_id=>greg.id)
 
 
     puts "#{Thing.count} things created and #{ThingImage.count("distinct thing_id")} with images"
