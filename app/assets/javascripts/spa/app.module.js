@@ -4,6 +4,8 @@
     angular
         .module("spa", [
             "ui.router",
+            "ngFileUpload",
+            "uiCropper",
             "spa.cities",
             "spa.config",
             "spa.authn",

@@ -8,6 +8,8 @@ gem 'rack-cors', '~>0.4', '>=0.4.0', :require => 'rack/cors'
 gem 'devise_token_auth', '~>0.1', '>=0.1.39'
 gem 'bcrypt', '~> 3.1.7'
 gem 'pundit', '~>1.1', '>=1.1.0'
+gem 'exifr', '~> 1.2', '>= 1.2.5'
+gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 
 gem 'sass-rails', '~> 5.0', '>=3.4.22'
 gem 'uglifier', '~> 3.0', '>=3.0.2'
@@ -55,4 +57,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-angular-resource', '~>1.5', '>= 1.5.8'
   gem 'rails-assets-ng-token-auth', '~>0.0', '>= 0.0.27'
   gem 'rails-assets-angular-cookie' #required by ng-token-auth
+  gem 'rails-assets-ng-file-upload', '~>12.2', '>= 12.2.11'
+  gem 'rails-assets-ng-file-upload-shim'
+  gem 'rails-assets-ui-cropper', '~>1.0', '>=1.0.4'
 end

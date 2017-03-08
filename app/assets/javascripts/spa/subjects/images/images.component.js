@@ -55,6 +55,7 @@
     ImageEditorController.$inject = ["$scope","$q",
         "$state", "$stateParams",
         "spa.authz.Authz",
+        "spa-demo.layout.DataUtils",
         "spa.subjects.Image",
         "spa.subjects.ImageThing",
         "spa.subjects.ImageLinkableThing",
@@ -101,9 +102,17 @@
                 vm.things.$promise]).catch(handleError);
         }
 
+        function setImageContent(dataUri) {
+            console.log("setImageContent", dataUri ? dataUri.length : null);
+            vm.item.image_content = DataUtils.getContentFromDataUri(dataUri);
+        }
+
         function clear() {
-            newResource();
-            $state.go(".", {id:null});
+            if (!vm.item.id) {
+                $state.reload();
+            } else {
+                $state.go(".", {id:null});
+            }
         }
 
         function create() {

@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     resources :tags, except: [:new, :edit] do
       resources :thing_tags, only: [:index,:create, :destroy]
     end
+
+    get "images/:id/content", as: :image_content, controller: :images, action: :content, defaults:{format: :jpg}
   end
 
   root "ui#index"

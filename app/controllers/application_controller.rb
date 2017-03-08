@@ -8,6 +8,7 @@ class ApplicationController < ActionController::API
 
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   rescue_from Mongoid::Errors::DocumentNotFound, with: :record_not_found
+  rescue_from Mongoid::Errors::Validations, with: :mongoid_validation_error
   rescue_from ActionController::ParameterMissing, with: :missing_parameter
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -22,6 +23,12 @@ class ApplicationController < ActionController::API
       full_message_error "cannot find id[#{params[:id]}]", :not_found
       Rails.logger.debug exception.message
     end
+
+  def mongoid_validation_error(exception)
+    payload = { errors:exception.record.errors.messages }
+    render :json=>payload, :status=>:unprocessable_entity
+    Rails.logger.debug exception.message
+  end
 
     def missing_parameter(exception) 
       payload = {
