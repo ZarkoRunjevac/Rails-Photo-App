@@ -55,13 +55,13 @@
     ImageEditorController.$inject = ["$scope","$q",
         "$state", "$stateParams",
         "spa.authz.Authz",
-        "spa-demo.layout.DataUtils",
+        "spa.layout.DataUtils",
         "spa.subjects.Image",
         "spa.subjects.ImageThing",
         "spa.subjects.ImageLinkableThing",
     ];
     function ImageEditorController($scope, $q, $state, $stateParams,
-                                   Authz, Image, ImageThing,ImageLinkableThing) {
+                                   Authz, DataUtils, Image, ImageThing,ImageLinkableThing) {
         var vm=this;
         vm.selected_linkables=[];
         vm.create = create;
@@ -69,10 +69,12 @@
         vm.update  = update;
         vm.remove  = remove;
         vm.linkThings = linkThings;
+        vm.setImageContent = setImageContent;
+
 
         vm.$onInit = function() {
             console.log("ImageEditorController",$scope);
-            console.log("Authz.getAuthorizedUserId()",Authz.getAuthorizedUserId());
+
             $scope.$watch(function(){ return Authz.getAuthorizedUserId(); },
                 function(){
                     if ($stateParams.id) {

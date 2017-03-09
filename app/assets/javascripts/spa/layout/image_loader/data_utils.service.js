@@ -2,8 +2,8 @@
     "use strict";
 
     angular
-        .module("spa-demo.layout")
-        .service("spa-demo.layout.DataUtils", DataUtils);
+        .module("spa.layout")
+        .service("spa.layout.DataUtils", DataUtils);
 
     DataUtils.$inject = [];
 

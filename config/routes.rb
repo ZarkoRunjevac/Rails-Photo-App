@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   get 'authn/checkme'
 
-  mount_devise_token_auth_for 'User', at: 'auth'
+  mount_devise_token_auth_for 'User', at: 'auth', controllers: {
+      registrations: 'registrations'
+  }
 
 
   scope :api, defaults: {format: :json} do

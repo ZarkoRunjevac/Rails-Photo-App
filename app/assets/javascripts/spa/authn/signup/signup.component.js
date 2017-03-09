@@ -14,11 +14,18 @@
         return APP_CONFIG.authn_signup_html;
     }
 
-    SignupController.$inject = ["$scope","$state","spa.authn.Authn"];
-    function SignupController($scope, $state, Authn) {
+    SignupController.$inject = ["$scope","$state","spa.authn.Authn","spa.layout.DataUtils"];
+    function SignupController($scope, $state, Authn, DataUtils) {
         var vm=this;
         vm.signupForm = {}
+        vm.signupForm = {
+            email: (new Date()).getTime() + '@lazy.com',
+            name: 'some name huh',
+            password: '12345678',
+            password_confirmation: '12345678'
+        };
         vm.signup = signup;
+        vm.setImageContent = setImageContent;
 
         vm.$onInit = function() {
             console.log("SignupController",$scope);
@@ -39,6 +46,11 @@
                     console.log("signup failure", response, vm);
                 }
             );
+        }
+
+        function setImageContent(dataUri) {
+            console.log("setImageContent", dataUri ? dataUri.length : null);
+            vm.signupForm.image_content = DataUtils.getContentFromDataUri(dataUri);
         }
 
     }

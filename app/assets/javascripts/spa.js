@@ -38,9 +38,11 @@
 //= require spa/authz/base_policy.service
 
 //= require spa/layout/layout.module
+//= require spa/layout/image_query_size.service
 //= require spa/layout/navbar/navbar.component
-//= require spa-demo/layout/image_loader/data_utils.service
-//= require spa-demo/layout/image_loader/image_loader.component
+//= require spa/layout/image_loader/data_utils.service
+//= require spa/layout/image_loader/image_loader.component
+//= require spa/layout/image_viewer/image_viewer.component
 
 
 //= require spa/subjects/subjects.module

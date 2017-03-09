@@ -2,18 +2,19 @@
     "use strict";
 
     angular
-        .module("spa-demo.layout")
+        .module("spa.layout")
         .component("sdImageLoader", {
             templateUrl: templateUrl,
             controller: ImageLoaderController,
             bindings: {
-                resultDataUri: "&"
+                resultDataUri: "&",
+                required: "@"
             },
             transclude: true
         });
 
 
-    templateUrl.$inject = ["spa-demo.config.APP_CONFIG"];
+    templateUrl.$inject = ["spa.config.APP_CONFIG"];
     function templateUrl(APP_CONFIG) {
         return APP_CONFIG.image_loader_html;
     }
