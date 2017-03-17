@@ -43,6 +43,11 @@
             <ul class="nav navbar-nav navbar-right">
                 <li id="login-dropdown" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+
+                        <img class="img-circle"
+                             style="height: 20px"
+                             ng-if="$ctrl.getUserImage()"
+                             ng-src="{{$ctrl.getUserImage()}}?height=20">
                         <span id="navbar-loginlabel">{{$ctrl.getLoginLabel()}}</span>
                         <span class="caret"></span></a>
 

@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
 	     roles.where(:role_name=>Role::ADMIN).exists?
 	  end
 
+		def image_url
+			Rails.application.routes.url_helpers.image_content_path(self.image) if image_id
+
+		end
 
 
 end
