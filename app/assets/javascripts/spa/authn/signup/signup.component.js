@@ -18,12 +18,7 @@
     function SignupController($scope, $state, Authn, DataUtils) {
         var vm=this;
         vm.signupForm = {}
-        vm.signupForm = {
-            email: (new Date()).getTime() + '@lazy.com',
-            name: 'some name huh',
-            password: '12345678',
-            password_confirmation: '12345678'
-        };
+
         vm.signup = signup;
         vm.setImageContent = setImageContent;
 
@@ -40,11 +35,7 @@
                     vm.id = response.data.data.id;
                     console.log("signup complete", response.data, vm);
                     $state.go("home");
-                    Authn.activate().then(
-                                    function(response){
-                                        $state.go("home");
-                                        }
-                               );
+                    
                 },
                 function(response){
                     vm.signupForm["errors"]=response.data.errors;

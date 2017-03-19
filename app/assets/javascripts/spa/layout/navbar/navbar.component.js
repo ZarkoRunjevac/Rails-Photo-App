@@ -31,7 +31,8 @@
         function getUserImage() {
 
             var user=Authn.getCurrentUser();
-            if(user!=null) return user.image_url;
+            //if(user!=null) return user.image_url;
+            if(user!=null) return "/api/images/"+ user.image_id +"/content"
             return null;
 
         }
