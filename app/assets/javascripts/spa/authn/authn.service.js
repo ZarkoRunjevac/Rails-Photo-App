@@ -9,6 +9,7 @@
     function Authn($auth, $q) {
         var service = this;
         service.signup = signup;
+        service.activate = activate;
         service.user = null;
         service.isAuthenticated = isAuthenticated;
         service.getCurrentUser = getCurrentUser;
@@ -17,16 +18,20 @@
         service.login = login;
         service.logout = logout;
 
+
         activate();
         return;
         ////////////////
         function activate() {
-            $auth.validateUser().then(
+            return $auth.validateUser().then(
                 function(user){
                     service.user = user;
                     console.log("validated user", user);
                 });
         }
+
+
+
         function signup(registration) {
             return $auth.submitRegistration(registration);
         }

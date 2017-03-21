@@ -4,7 +4,7 @@ class RegistrationsController < DeviseTokenAuth::RegistrationsController
     super do |resource|
       #binding.pry
       create_image(resource) if resource && params[:image_content]
-      resource
+      #resource
     end
   end
 
