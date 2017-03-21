@@ -14,6 +14,7 @@
 *.swp
 
 /db/images
+.idea/workspace.xml
 
 /client/build
 /bower_components
