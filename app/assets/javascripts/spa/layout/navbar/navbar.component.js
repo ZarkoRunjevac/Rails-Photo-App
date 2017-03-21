@@ -32,7 +32,7 @@
 
             var user=Authn.getCurrentUser();
             //if(user!=null) return user.image_url;
-            if(user!=null) return "/api/images/"+ user.image_id +"/content"
+            if(user!=null && user.image_id!=null) return "/api/images/"+ user.image_id +"/content";
             return null;
 
         }
