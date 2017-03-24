@@ -14,7 +14,7 @@
 *.swp
 
 /db/images
-/.idea
+
 
 /client/build
 /bower_components
