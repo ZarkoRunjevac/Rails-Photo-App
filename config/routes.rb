@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   
+
+
   #resources :thing_tags, except: [:new, :edit]
   get 'authn/whoami',  defaults: {format: :json}
 
@@ -14,11 +16,13 @@ Rails.application.routes.draw do
   scope :api, defaults: {format: :json} do
     resources :cities, except: [:new, :edit]
     resources :states, except: [:new, :edit]
+
     resources :images, except: [:new, :edit] do
       post "thing_images",  controller: :thing_images, action: :create
       get "thing_images",  controller: :thing_images, action: :image_things
       get "linkable_things",  controller: :thing_images, action: :linkable_things
     end
+
     resources :things, except: [:new, :edit] do
       resources :thing_images, only: [:index, :create, :update, :destroy]
       resources :tags, only: [:create, :destroy, :linkable_tags], controller: :thing_tags
@@ -34,6 +38,12 @@ Rails.application.routes.draw do
     end
 
     get "images/:id/content", as: :image_content, controller: :images, action: :content, defaults:{format: :jpg}
+
+    get 'geocoder/addresses' => "geocoder#addresses"
+
+    get 'geocoder/positions' => "geocoder#positions"
+
+    get 'subjects' => "thing_images#subjects"
   end
 
   root "ui#index"
