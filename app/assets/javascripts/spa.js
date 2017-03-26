@@ -65,3 +65,10 @@
 //= require spa/subjects/tags/tags_authz.service
 //= require spa/subjects/tags/tags_authz.directive
 //= require spa/subjects/tags/tags.component
+
+//= require spa/geoloc/geoloc.module
+//= require spa/geoloc/geocoder.service
+//= require spa/geoloc/my_location.service
+// require spa/geoloc/jhu_location.config
+//= require spa/geoloc/current_origin/current_origin.service
+//= require spa/geoloc/current_origin/current_origin_selector.component

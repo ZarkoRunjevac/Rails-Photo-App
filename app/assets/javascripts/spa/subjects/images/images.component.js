@@ -59,9 +59,11 @@
         "spa.subjects.Image",
         "spa.subjects.ImageThing",
         "spa.subjects.ImageLinkableThing",
+        "spa.geoloc.geocoder",
     ];
     function ImageEditorController($scope, $q, $state, $stateParams,
-                                   Authz, DataUtils, Image, ImageThing,ImageLinkableThing) {
+                                   Authz, DataUtils, Image, ImageThing, ImageLinkableThing,
+                                   geocoder) {
         var vm=this;
         vm.selected_linkables=[];
         vm.create = create;
@@ -70,6 +72,7 @@
         vm.remove  = remove;
         vm.linkThings = linkThings;
         vm.setImageContent = setImageContent;
+        vm.locationByAddress = locationByAddress;
 
 
         vm.$onInit = function() {
@@ -102,6 +105,9 @@
             vm.imagesAuthz.newItem(vm.item);
             $q.all([vm.item.$promise,
                 vm.things.$promise]).catch(handleError);
+            vm.item.$promise.then(function(image) {
+                vm.location=geocoder.getLocationByPosition(image.position);
+            });
         }
 
         function setImageContent(dataUri) {
@@ -160,7 +166,15 @@
                 handleError);
         }
 
-
+        function locationByAddress(address) {
+          console.log("locationByAddress for", address);
+          geocoder.getLocationByAddress(address).$promise.then(
+            function(location){
+              vm.location = location;
+              vm.item.position = location.position;
+              console.log("location", vm.location);
+            });
+        }
         function handleError(response) {
             console.log("error", response);
             if (response.data) {

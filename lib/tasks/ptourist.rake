@@ -79,7 +79,7 @@ namespace :ptourist do
     puts "added members for #{thing.name}: #{first_names(m)}"
     images.each do |img|
       puts "building image for #{thing.name}, #{img[:caption]}, by #{organizer.name}"
-      image=Image.create(:creator_id=>organizer.id,:caption=>img[:caption])
+      image=Image.create(:creator_id=>organizer.id,:caption=>img[:caption],:lat=>img[:lat],:lng=>img[:lng])
       organizer.add_role(Role::ORGANIZER, image).save
       ThingImage.new(:thing=>thing, :image=>image, 
                      :creator_id=>organizer.id)
@@ -152,6 +152,7 @@ namespace :ptourist do
      :lng=>-76.6327453,
      :lat=>39.2854217},
     ]
+    #binding.pry
     create_thing thing, organizer, members, images
 
     thing={:name=>"Baltimore Water Taxi",
