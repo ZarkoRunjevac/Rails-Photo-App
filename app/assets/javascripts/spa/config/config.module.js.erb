@@ -5,6 +5,7 @@
         .module("spa.config", [])
         .constant("spa.config.APP_CONFIG", {
             server_url: "<%= ENV['RAILS_API_URL'] %>",
+            default_position: {"lng":-76.61183685064316, "lat":39.28583496489344},
 
             main_page_html: "<%= asset_path('spa/pages/main.html') %>",
             signup_page_html: "<%= asset_path('spa/pages/signup_page.html') %>",
@@ -12,8 +13,14 @@
             images_page_html: "<%= asset_path('spa/pages/images_page.html') %>",
             things_page_html: "<%= asset_path('spa/pages/things_page.html') %>",
             tags_page_html: "<%= asset_path('spa/pages/tags_page.html') %>",
+            subjects_page_html: "<%= asset_path('spa/pages/subjects_page.html') %>",
 
             navbar_html: "<%= asset_path('spa/layout/navbar/navbar.html') %>",
+            tabs_html: "<%= asset_path('spa/layout/tabs/tabs.html') %>",
+            tab_html: "<%= asset_path('spa/layout/tabs/tab.html') %>",
+            areas_html: "<%= asset_path('spa/layout/areas/areas.html') %>",
+            area_html: "<%= asset_path('spa/layout/areas/area.html') %>",
+
             current_origin_selector_html: "<%= asset_path('spa/geoloc/current_origin/current_origin_selector.html') %>",
             image_loader_html: "<%= asset_path('spa/layout/image_loader/image_loader.html') %>",
             image_viewer_html: "<%= asset_path('spa/layout/image_viewer/image_viewer.html') %>",
@@ -25,7 +32,12 @@
             thing_editor_html: "<%= asset_path('spa/subjects/things/thing_editor.html') %>",
             thing_selector_html: "<%= asset_path('spa/subjects/things/thing_selector.html') %>",
             tag_editor_html: "<%= asset_path('spa/subjects/tags/tag_editor.html') %>",
-            tag_selector_html: "<%= asset_path('spa/subjects/tags/tag_selector.html') %>"
+            tag_selector_html: "<%= asset_path('spa/subjects/tags/tag_selector.html') %>",
+
+            current_images_html: "<%= asset_path('spa/subjects/current_images/current_images.html') %>",
+            current_image_viewer_html: "<%= asset_path('spa/subjects/current_images/current_image_viewer.html') %>",
+            current_things_html: "<%= asset_path('spa/subjects/current_things/current_things.html') %>",
+            current_thing_info_html: "<%= asset_path('spa/subjects/current_things/current_thing_info.html') %>",
         });
 
 })();

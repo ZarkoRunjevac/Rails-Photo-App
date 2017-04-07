@@ -44,6 +44,9 @@
 //= require spa/layout/image_loader/image_loader.component
 //= require spa/layout/image_viewer/image_viewer.component
 
+//= require spa/layout/tabs/tabs.component
+//= require spa/layout/areas/areas.component
+
 
 //= require spa/subjects/subjects.module
 //= require spa/subjects/images/images.service
@@ -72,3 +75,7 @@
 // require spa/geoloc/jhu_location.config
 //= require spa/geoloc/current_origin/current_origin.service
 //= require spa/geoloc/current_origin/current_origin_selector.component
+
+//= require spa/subjects/current_subjects/current_subjects.service
+//= require spa/subjects/current_images/current_images.component
+//= require spa/subjects/current_things/current_things.component
