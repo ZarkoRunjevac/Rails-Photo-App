@@ -64,7 +64,7 @@
                 function(images) { vm.images = images; }
             );
             $scope.$watch(
-                function() { return currentSubjects.getCurrentImageIndex(); },
+                function() { return currentSubjects.currentSubjects },
                 function(index) { vm.currentImageIndex = index; }
             );
         }

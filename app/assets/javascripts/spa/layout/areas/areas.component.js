@@ -85,7 +85,7 @@
     }
 
 
-    AreaController.$inject = ["$scope"];
+    AreaController.$inject = ["$scope",];
     function AreaController($scope) {
         var vm=this;
         vm.show=true;
@@ -105,20 +105,46 @@
     }
 
 
-    AreasSideController.$inject = [];
-    function AreasSideController() {
+    AreasSideController.$inject = ['$rootScope'];
+    function AreasSideController($rootScope) {
         var vm = this;
         vm.isHidden = isHidden;
+        vm.hiddenA7=false;
+        vm.isHiddenA7=isHiddenA7;
 
         vm.$onInit = function() {
             console.log("AreasSideController", vm);
+
         }
+
+        var v={
+            getData:getData
+        }
+        $rootScope.$on('spa.subjects.TABS', function (event, data) {
+            getData(data);
+        });
+        angular.extend(vm,v);
+
         return;
         /////////////////
         function isHidden(position) {
             var result=vm.areas.countActive(position)===0;
             console.log("isHidden", position, result);
             return result;
+        }
+
+        function isHiddenA7(){
+            //vm.$broadcast ('hasThings');
+            var result=vm.hiddenA7;
+            console.log("isHiddenA7", result);
+            return !result;
+        }
+
+        function getData(data){
+            vm.hiddenA7=data.hasThings;
+            vm.image=data.image_id;
+            console.log('hasThings',vm.hiddenA7);
+            console.log('image id ',vm.image);
         }
     }
 

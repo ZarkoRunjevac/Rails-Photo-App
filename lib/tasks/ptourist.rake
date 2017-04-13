@@ -93,7 +93,7 @@ namespace :ptourist do
   task reset_all: [:users,:subjects] do
   end
 
-  desc "deletes things, images, and links" 
+  desc "deletes things, images, and links"
   task delete_subjects: :environment do
     puts "removing #{Thing.count} things and #{ThingImage.count} thing_images"
     puts "removing #{Image.count} images"
@@ -128,7 +128,7 @@ namespace :ptourist do
     puts "users:#{User.pluck(:name)}"
   end
 
-  desc "reset things, images, and links" 
+  desc "reset things, images, and links"
   task subjects: [:users] do
     puts "creating things, images, and links"
 

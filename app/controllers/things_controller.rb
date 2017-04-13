@@ -51,8 +51,8 @@ class ThingsController < ApplicationController
     end
   end
 
-  # DELETE /things/1
-  # DELETE /things/1.json
+  # DELETE /thing_tabs/1
+  # DELETE /thing_tabs/1.json
   def destroy
     authorize @thing
     @thing.destroy

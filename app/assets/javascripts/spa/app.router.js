@@ -31,6 +31,10 @@
                 url: "/tags/:id",
                 templateUrl: APP_CONFIG.tags_page_html
             })
+            .state("subjects",{
+                url: "/subjects_assignment7",
+                templateUrl: APP_CONFIG.subjects_html
+            })
             .state("authn",{
                 url: "/authn",
                 templateUrl: APP_CONFIG.authn_page_html

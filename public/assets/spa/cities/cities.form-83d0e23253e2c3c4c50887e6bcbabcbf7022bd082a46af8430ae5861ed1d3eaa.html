@@ -1,0 +1,14 @@
+<div>
+      <form>
+        <div>
+            <label>Name:</label>
+            <input name="name" ng-model="citiesFormVM.city.name" required="required">
+        </div>
+        <button ng-if="!citiesFormVM.city.id" type="submit" ng-click="citiesFormVM.create()" class="btn btn-lg btn-primary ">Create citiy</button>
+        <div ng-if="citiesFormVM.city.id">
+            <button type="submit" ng-click="citiesFormVM.update()" class="btn btn-lg btn-success">Update City</button>
+            <button type="submit" ng-click="citiesFormVM.remove()" class="btn btn-lg btn-danger">Delete City</button>
+        </div>
+    </form>
+
+</div>

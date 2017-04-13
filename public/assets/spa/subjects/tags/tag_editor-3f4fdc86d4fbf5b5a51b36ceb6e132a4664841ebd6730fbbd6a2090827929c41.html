@@ -1,0 +1,61 @@
+<form class="tag-form row" name="tagform">
+
+    <span class="invalid">{{$ctrl.item.errors.full_messages}}</span>
+
+    <div class="tag-name row col-lg-12"
+         ng-show="$ctrl.authz.canQuery">
+
+        <label class="col-xs-3">Name:</label>
+        <input class="col-xs-9"
+               name="tag-name"
+               data-ng-model="$ctrl.item.name"
+               ng-readonly="!$ctrl.authz.canUpdate"
+               required="required"
+               maxlength="40"
+               pattern=".{3,}" title="3 character minimum for Name"/>
+        <span class="invalid">{{$ctrl.item.errors.name}}</span>
+    </div>
+
+    <div class="tag-things row col-lg-12"
+         ng-show="$ctrl.item.id && $ctrl.authz.canQuery">
+        <label class="col-xs-3">Related Things:</label>
+        <ul class="tag-things col-xs-9">
+            <li ng-repeat="ti in $ctrl.things | orderBy:'priority'">
+                <a data-ui-sref="things({id:ti.thing_id})">
+                    <span class="id thing_id">{{ti.thing_id}}</span>
+                    {{ti.thing_name}}</a>
+            </li>
+        </ul>
+        <span class="invalid">{{$ctrl.item.errors.things}}</span>
+    </div>
+
+    <div class="tag-controls"
+         ng-show="$ctrl.authz.authenticated">
+        <button name="tag-create" ng-show="!$ctrl.item.id && $ctrl.authz.canCreate"
+                name="tag-create"
+                ng-disabled="tagform.$invalid"
+                type="submit"
+                ng-click="$ctrl.create()">Create Tag</button>
+
+        <div ng-show="$ctrl.item.id">
+      <span class="tag-modify"
+            data-ng-hide="!$ctrl.authz.canUpdate &&
+                          !$ctrl.authz.canUpdateTag &&
+                          !$ctrl.authz.canRemoveTag">
+        <button name="tag-update"
+                type="submit"
+                ng-disabled="tagform.$invalid || !tagform.$dirty"
+                ng-click="$ctrl.update()">Update Tag</button>
+
+      </span>
+
+            <button name="tag-delete"
+                    type="submit"
+                    ng-show="$ctrl.authz.canDelete"
+                    ng-click="$ctrl.remove()">Delete Tag</button>
+            <button name="tag-clear"
+                    type="submit"
+                    ng-click="$ctrl.clear()">Clear Tag</button>
+        </div>
+    </div>
+</form>

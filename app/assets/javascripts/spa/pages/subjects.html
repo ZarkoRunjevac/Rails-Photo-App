@@ -1,0 +1,39 @@
+<div class="subjects-page col-xs-12">
+    <sd-areas sd-areas-side>
+        <div class="areas-left"
+             ng-hide="sideVM.isHidden('left')"
+             ng-class="sideVM.isHiddenA7('right') ?'col-sm-12':'col-sm-6 col-md-5 col-lg-4'">
+            <sd-area label="Images"
+                     position="left">
+
+                <sd-tabs>
+                    <sd-tab label="Images">
+                        <sd-a7-images></sd-a7-images>
+                    </sd-tab>
+                </sd-tabs>
+
+            </sd-area>
+
+
+        </div>
+        <div class="areas-right"
+             ng-hide="sideVM.isHiddenA7('right')"
+             ng-class="sideVM.isHiddenA7('left') ? 'col-sm-12':'col-sm-6 col-md-7 col-lg-8'">
+            <sd-area label="Things"
+                     position="right">
+
+                <sd-thing-tabs image="sideVM.image" >
+
+
+                        <sd-thing-tab label="test" thing="vm.thing">
+
+                        </sd-thing-tab>
+
+
+
+                </sd-thing-tabs>
+
+            </sd-area>
+        </div>
+    </sd-areas>
+</div>
