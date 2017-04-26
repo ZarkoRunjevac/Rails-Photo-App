@@ -1398,6 +1398,10 @@ div.areas-pane > ul.tab-label li a {
     font-size: 0.8em;
 }
 
+.select_type_form{
+    margin-left:5px;
+    margin-top: 5px;
+}
 /*** map height ***/
 
 div.area-pane div.tab-content div.tab-pane,
