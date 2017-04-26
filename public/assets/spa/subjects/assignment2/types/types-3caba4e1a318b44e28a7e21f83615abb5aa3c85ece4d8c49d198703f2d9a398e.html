@@ -1,0 +1,24 @@
+<form name="select_type">
+    <input type="text"
+           name="input"
+           ng-model="$ctrl.type_query"
+           ng-required="true">
+    <button
+            ng-click="$ctrl.search()"
+            ng-disabled="select_type.$invalid"
+            class="btn btn-default">
+        Query
+    </button>
+</form>
+
+
+<ul class="items types">
+    <li ng-repeat="tag in $ctrl.tags"
+        ng-class="{selected: $ctrl.isCurrentTag(tag.id)}">
+        <a ng-click="$ctrl.tagClicked(tag.id)">
+            <span class="id tag_id">{{tag.id}}</span>
+            <span class="name">{{tag.name}}</span>
+
+        </a>
+    </li>
+</ul>

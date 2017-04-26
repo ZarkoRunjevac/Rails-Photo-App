@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="96c9da53-5e16-4c3b-a2bc-f39084266530" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.rakeTasks" afterPath="$PROJECT_DIR$/.idea/.rakeTasks" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/spa.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/spa.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/spa/app.router.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/spa/app.router.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/spa/config/config.module.js.erb" afterPath="$PROJECT_DIR$/app/assets/javascripts/spa/config/config.module.js.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/spa/geoloc/map.service.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/spa/geoloc/map.service.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/spa/layout/navbar/navbar.html" afterPath="$PROJECT_DIR$/app/assets/javascripts/spa/layout/navbar/navbar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/tags_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/tags_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/thing_tags_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/thing_tags_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/tag.rb" afterPath="$PROJECT_DIR$/app/models/tag.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/tags/_tag.json.jbuilder" afterPath="$PROJECT_DIR$/app/views/tags/_tag.json.jbuilder" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/ui/index.html.erb" afterPath="$PROJECT_DIR$/app/views/ui/index.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tasks/ptourist.rake" afterPath="$PROJECT_DIR$/lib/tasks/ptourist.rake" />
-    </list>
+    <list default="true" id="96c9da53-5e16-4c3b-a2bc-f39084266530" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.bundle/" />
     <ignored path="$PROJECT_DIR$/components/" />
     <ignored path="$PROJECT_DIR$/public/system/" />
@@ -48,11 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="current_types.service.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="current_types.service.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/assets/javascripts/spa/subjects/assignment2/current_types/current_types.service.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="145" column="4" lean-forward="false" selection-start-line="145" selection-start-column="4" selection-end-line="145" selection-end-column="4" />
+            <state relative-caret-position="373">
+              <caret line="269" column="17" lean-forward="true" selection-start-line="269" selection-start-column="17" selection-end-line="269" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -68,7 +53,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ptourist.rake" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ptourist.rake" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/tasks/ptourist.rake">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="257">
@@ -980,12 +965,12 @@
       <workItem from="1491289638193" duration="21631000" />
       <workItem from="1492501302974" duration="15244000" />
       <workItem from="1492584913203" duration="1580000" />
-      <workItem from="1492589985753" duration="60054000" />
+      <workItem from="1492589985753" duration="61410000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="160691000" />
+    <option name="totallyTimeSpent" value="162047000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1448" y="-8" width="1456" height="876" extended-state="6" />
@@ -1376,22 +1361,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/spa.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="72" column="39" lean-forward="true" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/spa/subjects/assignment2/current_types/current_types.service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="145" column="4" lean-forward="false" selection-start-line="145" selection-start-column="4" selection-end-line="145" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/javascripts/spa/subjects/assignment2/types/types.component.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="271">
@@ -1420,6 +1389,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="257">
           <caret line="387" column="25" lean-forward="true" selection-start-line="387" selection-start-column="25" selection-end-line="387" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/spa.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="72" column="39" lean-forward="true" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/spa/subjects/assignment2/current_types/current_types.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="269" column="17" lean-forward="true" selection-start-line="269" selection-start-column="17" selection-end-line="269" selection-end-column="17" />
           <folding />
         </state>
       </provider>
