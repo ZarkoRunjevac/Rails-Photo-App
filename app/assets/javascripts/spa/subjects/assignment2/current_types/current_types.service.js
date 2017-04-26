@@ -127,7 +127,7 @@
          if(type_query==null)
          {
              this.setCurrentTag(null,null);
-             return tags;
+             return this.tags;
          }
         for(var i=0; i<this.tags.length; i++) {
             var tag=this.tags[i];

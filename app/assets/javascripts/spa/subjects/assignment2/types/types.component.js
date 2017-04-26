@@ -20,22 +20,26 @@
     function TypesController($scope,currentTypes) {
         var vm=this;
         vm.tagClicked = tagClicked;
-        vm.search=search;
+
         vm.isCurrentTag = currentTypes.isCurrentTagIndex;
 
         vm.$onInit = function() {
             console.log("CurrentTypesController",$scope);
         }
         vm.$postLink = function() {
-            /*$scope.$watch(
+            var listener =$scope.$watch(
                 function() { return currentTypes.getTags(); },
-                function(tags) { vm.tags = tags; }
-            );*/
+                function(tags) {
+                    vm.tags = tags;
+                    if(vm.tags.length>0)  listener();
+                }
+            );
+            vm.tags=currentTypes.getTagsByQuery(null);
             $scope.$watch(
                 function(){return vm.type_query;},
                 function(newVal, oldVal){
 
-                    vm.tags=currentTypes.getTagsByQuery(newVal);
+                vm.tags=currentTypes.getTagsByQuery(newVal);
                 if(vm.tags.length>0){
                     currentTypes.setCurrentTag(vm.tags[0].id);
                 }
@@ -47,9 +51,6 @@
             currentTypes.setCurrentTag(index);
         }
 
-        function search(){
-            vm.tags=currentTypes.getTagsByQuery(vm.type_query);
-        }
     }
 
 
