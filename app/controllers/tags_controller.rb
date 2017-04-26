@@ -4,7 +4,7 @@ class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :update, :destroy]
   wrap_parameters :tag, include: ["name"]
   before_action :authenticate_user!, only: [:create, :update, :destroy]
-  after_action :verify_authorized
+  after_action :verify_authorized, except: [:tags_with_things]
   after_action :verify_policy_scoped, only: [:index]
 
   def index
@@ -20,6 +20,10 @@ class TagsController < ApplicationController
     authorize @tag
     tags = policy_scope(Tag.from('tags t').where('t.id= (?)',@tag.id))
     @tag = TagPolicy.merge(tags).first
+  end
+
+  def tags_with_things
+    @tags=Tag.with_things
   end
 
   def create

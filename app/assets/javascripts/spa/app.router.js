@@ -31,6 +31,10 @@
                 url: "/tags/:id",
                 templateUrl: APP_CONFIG.tags_page_html
             })
+            .state("types",{
+                url: "/types",
+                templateUrl: APP_CONFIG.types_page_html
+            })
             .state("authn",{
                 url: "/authn",
                 templateUrl: APP_CONFIG.authn_page_html

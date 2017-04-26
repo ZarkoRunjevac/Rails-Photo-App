@@ -3,10 +3,10 @@
 
     angular
         .module("spa.geoloc")
-        .factory("spa.geoloc.Map", GeolocMapFactory);
+        .factory("spa.geoloc.OverlappingMap", OverlappingGeolocMapFactory);
 
-    GeolocMapFactory.$inject = ["$timeout","spa.config.APP_CONFIG"];
-    function GeolocMapFactory($timeout, APP_CONFIG) {
+    OverlappingGeolocMapFactory.$inject = ["$timeout","spa.config.APP_CONFIG"];
+    function OverlappingGeolocMapFactory($timeout, APP_CONFIG) {
 
         function GeolocMap(element, mapOptions) {
             var service=this;
@@ -15,6 +15,11 @@
             service.currentMarker = null;
             service.options = service.normalizeMapOptions(mapOptions);
             service.map = new google.maps.Map(element, service.options);
+            service.oms = new OverlappingMarkerSpiderfier(service.map, {
+                markersWontMove: true,
+                markersWontHide: true,
+                basicFormatEvents: true
+            });
         }
 
         GeolocMap.prototype.normalizeMapOptions = function(mapOptions) {
@@ -76,7 +81,6 @@
 
             //display the marker
             var marker = new google.maps.Marker(markerOptions);
-            marker.setMap(this.map);
 
             //add an info pop-up
             var service=this;
@@ -99,6 +103,7 @@
                 bounds.extend(marker.position);
             });
 
+            this.oms.addMarker(marker);
             //console.log("bounds", bounds);
             this.map.fitBounds(bounds);
 
@@ -133,13 +138,6 @@
             }
             this.currentMarker = markerOptions;
         }
-
-
-
-
-
-
-
 
         return GeolocMap;
     }

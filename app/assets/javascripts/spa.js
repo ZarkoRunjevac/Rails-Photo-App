@@ -81,3 +81,12 @@
 //= require spa/subjects/current_subjects/current_subjects.component
 //= require spa/subjects/current_images/current_images.component
 //= require spa/subjects/current_things/current_things.component
+
+
+//= require spa/subjects/assignment2/current_types/current_types.service
+//= require spa/subjects/assignment2/types/types.component
+//= require spa/subjects/assignment2/things_for_type/things_for_type.component
+//= require spa/subjects/assignment2/current_types/types_map.component
+//= require spa/subjects/assignment2/overlapping_map/overlapping.map.service.js
+
+//= require spa/subjects/assignment2/overlapping_map/oms.min.js

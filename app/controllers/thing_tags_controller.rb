@@ -7,6 +7,7 @@ class ThingTagsController < ApplicationController
   before_action :get_tag, only: [:index]
   before_action :get_thing_tag, only: [:destroy]
   before_action :authenticate_user!, only: [:create, :destroy]
+
   after_action :verify_authorized
 
 
@@ -35,6 +36,8 @@ class ThingTagsController < ApplicationController
     
     render "tags/index"
   end
+
+
 
   def create
     #binding.pry

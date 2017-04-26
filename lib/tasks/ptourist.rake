@@ -340,8 +340,8 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
     organizer=user("alice")
     image= {:path=>"db/bta/skyline_water_level.jpg",
      :caption=>"Skyline Water Level",
-     :lng=>-76.6284366, 
-     :lat=>39.2780493
+     :lng=>-76.606205,
+     :lat=>39.281114
      }
     create_image organizer, image
 
@@ -377,18 +377,18 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
 
     puts "Creating Tags"
 
-    tag3= {name: "Tag 3"}
-    create_tag organizer,tag3
+    tag3= {name: "Hotel"}
+    tag3= create_tag organizer, tag3
 
-    tag2 = {name: "Tag 2"}
+    tag2 = {name: "Museum"}
     tag2=create_tag organizer, tag2
     
-    tag1=create_tag organizer,{name: "Tag 1"}
+    tag1=create_tag organizer,{name: "Railroad"}
     
     organizer=user("jan")
 
-    tag4=create_tag organizer, {name: "Tag 4"}
-    tag5= create_tag organizer, {name: "Tag 5"}
+    tag4=create_tag organizer, {name: "Aquarium"}
+    tag5= create_tag organizer, {name: "Taxi"}
 
     puts "add Marsha as Thing Organizer"
     marsha = user("marsha")
@@ -408,6 +408,16 @@ Work up a sweat in our 24-hour StayFit Gym, which features Life Fitness® cardio
 
     thing = Thing.where(name: "Baltimore Water Taxi").first
     ThingTag.create( thing: thing, tag: tag5, :creator_id=>greg.id)
+
+    alice=user("alice")
+    alice.add_role(Role::ORGANIZER, Thing)
+    alice.save!
+
+    thing = Thing.where(name: "Holiday Inn Timonium").first
+    ThingTag.create( thing: thing, tag: tag3, :creator_id=>alice.id)
+
+    thing = Thing.where(name: "Hyatt Place Baltimore").first
+    ThingTag.create( thing: thing, tag: tag3, :creator_id=>alice.id)
 
 
     puts "#{Thing.count} things created and #{ThingImage.count("distinct thing_id")} with images"

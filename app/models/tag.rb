@@ -6,5 +6,5 @@ class Tag < ActiveRecord::Base
 
   scope :not_linked, ->(thing) { where.not("t.id"=>ThingTag.select(:tag_id)
                                                     .where(:thing=>thing)) }
-
+  scope :with_things, ->{joins(:things).group('tags.id').order(name: :asc)}
 end

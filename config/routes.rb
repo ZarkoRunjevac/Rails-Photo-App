@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  
-
 
   #resources :thing_tags, except: [:new, :edit]
   get 'authn/whoami',  defaults: {format: :json}
@@ -44,6 +42,7 @@ Rails.application.routes.draw do
     get 'geocoder/positions' => "geocoder#positions"
 
     get 'subjects' => "thing_images#subjects"
+    get 'types' => "tags#tags_with_things"
   end
 
   root "ui#index"
